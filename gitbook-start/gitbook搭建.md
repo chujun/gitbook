@@ -218,7 +218,7 @@ Restart after change in file gitbook搭建.md
 ![浏览](img/初次浏览效果.png)
 
 ## 发布电子书
-git build
+gitbook build
 服务启动后也会自动生成_book文件夹
 当电子书内容制作好后，可以使用如下命令，生成html版本的电子书：
 gitbook build

@@ -13,10 +13,9 @@
 ```
 
 ![项目目录结构效果图.png](img/项目目录结构效果图.png)
-
 # book.json
 用来存放配置信息 网上的一个demo
-```
+```json
 {
     "title": "Blankj's Glory",
     "author": "Blankj",
@@ -146,6 +145,25 @@ en, ar, bn, cs, de, en, es, fa, fi, fr, he, it, ja, ko, no, pl, pt, ro, ru, sv, 
         * [搭建2](gitbook-start/gitbook搭建.md)
     * [结构](gitbook-start/gitbook结构.md)
     * [插件](gitbook-start/插件.md)
+```
+也可以用标题或者水平分割线标识将GitBook目录分为几个不同的部分：
+```
+# Summary
+
+### Part I
+
+* [Introduction](README.md)
+* [Writing is nice](part1/writing.md)
+* [GitBook is nice](part1/gitbook.md)
+
+### Part II
+
+* [We love feedback](part2/feedback_please.md)
+* [Better tools for authors](part2/better_tools.md)
+
+----
+
+* [Last part without title](part3/title.md)
 ```
 
 
