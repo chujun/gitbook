@@ -12,6 +12,8 @@
     └── something.md
 ```
 
+![项目目录结构效果图.png](img/项目目录结构效果图.png)
+
 # book.json
 用来存放配置信息 网上的一个demo
 ```
@@ -105,7 +107,7 @@
 ```
 
 # SUMMARY.md
- 表达GitBook 的章节目录，支持Markdown列表语法
+ 表达GitBook 的章节目录，支持Markdown语法
 ```
 # Summary
 

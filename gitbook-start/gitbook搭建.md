@@ -212,7 +212,8 @@ Restart after change in file gitbook搭建.md
 
 
 ## 安装插件
-在项目目录下执行命令gitbook install ./
+在book.json文件调整插件配置后，再在项目目录下执行命令gitbook install ./
+当然也可以指定插件版本安装，碰到再聊
 ![浏览](img/安装插件效果图.png)
 
 # TODO 
