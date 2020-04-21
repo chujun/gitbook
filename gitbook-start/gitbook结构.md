@@ -169,6 +169,9 @@ en, ar, bn, cs, de, en, es, fa, fi, fr, he, it, ja, ko, no, pl, pt, ro, ru, sv, 
 * [Last part without title](part3/title.md)
 ```
 
+# 参考资料
+[GitBook 学习笔记](https://yangjh.oschina.io/gitbook/faq/Contents.html)
+
 
 
 
