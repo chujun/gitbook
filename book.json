@@ -12,7 +12,7 @@
   },
   "links": {
     "sidebar": {
-      "github": "https://blankj.com"
+      "github": "https://github.com/chujun"
     }
   },
   "plugins": [
@@ -31,12 +31,12 @@
   ],
   "pluginsConfig": {
     "github": {
-      "url": "https://github.com/Blankj"
+      "url": "https://github.com/chujun"
     },
     "github-buttons": {
       "buttons": [{
-        "user": "Blankj",
-        "repo": "glory",
+        "user": "chujun",
+        "repo": "gitbook",
         "type": "star",
         "size": "small",
         "count": true
