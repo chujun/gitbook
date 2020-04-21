@@ -26,7 +26,8 @@
     "donate",
     "sharing-plus",
     "anchor-navigation-ex",
-    "favicon"
+    "favicon",
+    "-lunr", "-search", "search-pro"
   ],
   "pluginsConfig": {
     "github": {

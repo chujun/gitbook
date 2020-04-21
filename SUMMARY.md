@@ -2,5 +2,6 @@
 
 * [Introduction](README.md)
 
-* [gitbook搭建.md](gitbook-start/gitbook搭建.md)
-* [gitbook结构.md](gitbook-start/gitbook结构.md)
+* [搭建](gitbook-start/gitbook搭建.md)
+* [结构](gitbook-start/gitbook结构.md)
+* [插件](gitbook-start/插件.md)

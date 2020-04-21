@@ -215,4 +215,8 @@ Restart after change in file gitbook搭建.md
 在项目目录下执行命令gitbook install ./
 ![浏览](img/安装插件效果图.png)
 
-[gitbook plugin插件库](![浏览](img/初次浏览效果.png))
+# TODO 
+1. gitbook plugin插件库
+
+# 参考资料
+[简书 GitBook 使用教程](https://www.jianshu.com/p/421cc442f06c)
