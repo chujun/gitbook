@@ -44,10 +44,13 @@
       ]
     },
     "donate": {
-      "alipay": "./source/images/donate.png",
-      "title": "",
-      "button": "赞赏",
-      "alipayText": " "
+        "wechat": "/img/alipay.jpg",
+        "alipay": "/img/wxpay.jpg",
+        "title": "",
+        "button": "赞赏",
+        "alipayText": " ",
+        "wechatText": " "
+
     },
     "sharing": {
       "douban": false,
