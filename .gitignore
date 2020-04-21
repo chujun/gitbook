@@ -11,3 +11,4 @@ deploy.sh
 
 _book/
 node_modules/
+package-lock.json
