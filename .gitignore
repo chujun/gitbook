@@ -7,10 +7,7 @@ log/
 .idea/
 *.iml
 deploy.sh
-nova.sh
 
-application-dev.properties
-application-test.properties
-logback-spring-dev.xml
 
 _book/
+node_modules/
