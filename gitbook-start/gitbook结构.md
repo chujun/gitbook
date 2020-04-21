@@ -106,6 +106,33 @@
 }
 ```
 
+## 配置说明
+* 1.language
+Gitbook使用的语言, 版本2.6.4中可选的语言如下：
+en, ar, bn, cs, de, en, es, fa, fi, fr, he, it, ja, ko, no, pl, pt, ro, ru, sv, uk, vi, zh-hans, zh-tw
+例如，配置使用简体中文 "language" : "zh-hans"
+* 2.links
+在左侧导航栏添加链接信息
+```
+"links" : {
+    "sidebar" : {
+        "Home" : "https://www.baidu.com"
+    }
+}
+```
+* 3.styles
+自定义页面样式， 默认情况下各generator对应的css文件
+```
+"styles": {
+    "website": "styles/website.css",
+    "ebook": "styles/ebook.css",
+    "pdf": "styles/pdf.css",
+    "mobi": "styles/mobi.css",
+    "epub": "styles/epub.css"
+}
+```
+
+
 # SUMMARY.md
  表达GitBook 的章节目录，支持Markdown语法
 ```
