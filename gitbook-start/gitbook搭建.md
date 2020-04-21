@@ -18,6 +18,7 @@ added 578 packages from 672 contributors in 36.313s
 ```
 
 ## gitbook -V 检查命令是否安装成功
+%accordion%gitbook -V%accordion%
 ```
 gitbook -V
 CLI version: 2.3.2
@@ -133,6 +134,7 @@ gitbook@3.2.3 ../../../../var/folders/3r/4hqx7wh11735mb4k6820b9hc0000gn/T/tmp-57
 └── npm@3.9.2
 GitBook version: 3.2.3
 ```
+%/accordion%
 ```
 $gitbook -V
 CLI version: 2.3.2
@@ -166,6 +168,7 @@ README.md  SUMMARY.md
 ```
 
 ## gitbook serve启动gitbook项目
+%accordion%gitbook serve日志%accordion%
 ```
  chujun@chujundeMacBook-Pro  ~/my/project/my/gitbook  gitbook serve
 Live reload server started on port: 35729
@@ -207,6 +210,7 @@ Starting server ...
 Serving book on http://localhost:4000
 Restart after change in file gitbook搭建.md
 ```
+%/accordion%
 ### 内容修改
 每当调整了gitbook内容无需重启，热部署(查询服务控制台信息即可看出来)，刷新页面即可所得，除非修改了配置信息除外
 
@@ -230,7 +234,7 @@ gitbook build
 ![浏览](img/安装插件效果图.png)
 
 # TODO 
-1. gitbook plugin插件库
+1. gitbook plugin插件库官网竟然链接失效了
 
 # 参考资料
 [简书 GitBook 使用教程](https://www.jianshu.com/p/421cc442f06c)

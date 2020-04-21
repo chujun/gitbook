@@ -15,7 +15,9 @@
 ![项目目录结构效果图.png](img/项目目录结构效果图.png)
 # book.json
 用来存放配置信息 网上的一个demo
-```json
+
+%accordion%book.json demo%accordion%
+```json5
 {
     "title": "Blankj's Glory",
     "author": "Blankj",
@@ -104,6 +106,7 @@
     }
 }
 ```
+%/accordion%
 
 ## 配置说明
 * 1.language
