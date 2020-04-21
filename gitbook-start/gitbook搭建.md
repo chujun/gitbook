@@ -206,6 +206,12 @@ Starting server ...
 Serving book on http://localhost:4000
 Restart after change in file gitbook搭建.md
 ```
+### 内容修改
+每当调整了gitbook内容无需重启，热部署(查询服务控制台信息即可看出来)，刷新页面即可所得，除非修改了配置信息除外
+
+### 页面报错，无法加载
+1. 可能是报错了，重新发布下即可
+2. 终极大法可以考虑删除大法，直接把项目下的_book目录和node_mudules目录删除，重新发布gitbook项目
 
 ## 浏览器浏览gitbook
 ![浏览](img/初次浏览效果.png)
