@@ -209,3 +209,10 @@ Restart after change in file gitbook搭建.md
 
 ## 浏览器浏览gitbook
 ![浏览](img/初次浏览效果.png)
+
+
+## 安装插件
+在项目目录下执行命令gitbook install ./
+![浏览](img/安装插件效果图.png)
+
+[gitbook plugin插件库](![浏览](img/初次浏览效果.png))
