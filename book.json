@@ -17,15 +17,24 @@
   },
   "plugins": [
     "-sharing",
+    "sharing-plus",
+
     "splitter",
+
     "chapter-fold",
+
     "anchors",
+    "anchor-navigation-ex",
+
     "github",
     "github-buttons",
+
     "donate",
-    "sharing-plus",
-    "anchor-navigation-ex",
+
     "favicon",
+
+    "code",
+
     "-lunr",
     "-search",
     "search-pro"
