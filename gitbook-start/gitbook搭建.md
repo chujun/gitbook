@@ -217,6 +217,12 @@ Restart after change in file gitbook搭建.md
 ## 浏览器浏览gitbook
 ![浏览](img/初次浏览效果.png)
 
+## 发布电子书
+git build
+服务启动后也会自动生成_book文件夹
+当电子书内容制作好后，可以使用如下命令，生成html版本的电子书：
+gitbook build
+该命令会在当前文件夹中生成_book文件夹，用户可以将这个文件夹内容托管到网上，从而实现内容的发布。
 
 ## 安装插件
 在book.json文件调整插件配置后，再在项目目录下执行命令gitbook install ./
