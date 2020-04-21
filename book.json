@@ -20,37 +20,38 @@
     "splitter",
     "expandable-chapters-small",
     "anchors",
-
     "github",
     "github-buttons",
     "donate",
     "sharing-plus",
     "anchor-navigation-ex",
     "favicon",
-    "-lunr", "-search", "search-pro"
+    "-lunr",
+    "-search",
+    "search-pro"
   ],
   "pluginsConfig": {
     "github": {
       "url": "https://github.com/chujun"
     },
     "github-buttons": {
-      "buttons": [{
-        "user": "chujun",
-        "repo": "gitbook",
-        "type": "star",
-        "size": "small",
-        "count": true
-      }
+      "buttons": [
+        {
+          "user": "chujun",
+          "repo": "gitbook",
+          "type": "star",
+          "size": "small",
+          "count": true
+        }
       ]
     },
     "donate": {
-        "wechat": "/img/alipay.jpg",
-        "alipay": "/img/wxpay.jpg",
-        "title": "",
-        "button": "赞赏",
-        "alipayText": " ",
-        "wechatText": " "
-
+      "wechat": "/img/alipay.jpg",
+      "alipay": "/img/wxpay.jpg",
+      "title": "",
+      "button": "赞赏",
+      "alipayText": " ",
+      "wechatText": " "
     },
     "sharing": {
       "douban": false,
@@ -71,14 +72,20 @@
       "weibo": false,
       "whatsapp": false,
       "all": [
-        "google", "facebook", "weibo", "twitter",
-        "qq", "qzone", "linkedin", "pocket"
+        "google",
+        "facebook",
+        "weibo",
+        "twitter",
+        "qq",
+        "qzone",
+        "linkedin",
+        "pocket"
       ]
     },
     "anchor-navigation-ex": {
       "showLevel": false
     },
-    "favicon":{
+    "favicon": {
       "shortcut": "./source/images/favicon.jpg",
       "bookmark": "./source/images/favicon.jpg",
       "appleTouch": "./source/images/apple-touch-icon.jpg",
