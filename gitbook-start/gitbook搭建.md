@@ -141,6 +141,7 @@ GitBook version: 3.2.3
 
 # 开始gitbook之旅吧
 ## gitbook init初始化gitbook项目
+根据 SUMMARY.md 的目录结构初始化各个章节文件
 ```
 chujun@chujundeMacBook-Pro  ~/my/project/my  mkdir gitbook
  chujun@chujundeMacBook-Pro  ~/my/project/my  ls
