@@ -13,4 +13,4 @@ application-dev.properties
 application-test.properties
 logback-spring-dev.xml
 
-_book
+_book/

@@ -206,3 +206,6 @@ Starting server ...
 Serving book on http://localhost:4000
 Restart after change in file gitbook搭建.md
 ```
+
+## 浏览器浏览gitbook
+[浏览](img/gitbook/初次浏览效果.png)
