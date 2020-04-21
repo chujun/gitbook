@@ -2,4 +2,4 @@
 
 * [Introduction](README.md)
 
-* [gitbook搭建.md](gitbook/gitbook搭建.md)
+* [gitbook搭建.md](gitbook-start/gitbook搭建.md)
