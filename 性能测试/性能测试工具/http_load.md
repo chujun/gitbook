@@ -42,7 +42,40 @@ cp: /usr/local/man/man1: No such file or directory
 make: *** [install] Error 1
 ```
 
+# 常见使用
+
+准备url文件
+
+```bash
+$ cat first.txt
+http://localhost:4000/
+```
+
+## 1.基于并发数
+```
+$ http_load -parallel 10 -seconds 5  first.txt
+14863 fetches, 10 max parallel, 2.08127e+08 bytes, in 5.00013 seconds
+14003 mean bytes/connection
+2972.52 fetches/sec, 4.16242e+07 bytes/sec
+msecs/connect: 0.16341 mean, 24.721 max, 0.036 min
+msecs/first-response: 3.08797 mean, 36.806 max, 0.816 min
+HTTP response codes:
+  code 200 -- 14863
+```
+
+## 2.基于每秒速率
+```
+$ http_load -rate 10 -seconds 5  first.txt
+49 fetches, 1 max parallel, 686147 bytes, in 5.00141 seconds
+14003 mean bytes/connection
+9.79724 fetches/sec, 137191 bytes/sec
+msecs/connect: 0.441245 mean, 0.906 max, 0.26 min
+msecs/first-response: 0.983673 mean, 1.656 max, 0.574 min
+HTTP response codes:
+  code 200 -- 49
+```
+
+# 实际应用场景
 
 
-# 使用
-
+# 参考资料
