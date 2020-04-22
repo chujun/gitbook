@@ -43,17 +43,59 @@ make: *** [install] Error 1
 ```
 
 # 常见使用
+## 常见参数
+```
+-parallel 简写-p ：含义是并发的用户进程数。
+-rate 简写-r ：含义是每秒的访问频率
 
-准备url文件
+-fetches 简写-f ：含义是总计的访问次数
+-seconds 简写-s ：含义是总计的访问时间
+```
+
+## 使用示例
+```
+http_load -r 10 -s 5 first.txt
+49 fetches, 1 max parallel, 686147 bytes, in 5.00346 seconds
+14003 mean bytes/connection
+9.79323 fetches/sec, 137135 bytes/sec
+msecs/connect: 0.438143 mean, 0.647 max, 0.225 min
+msecs/first-response: 1.69065 mean, 11.311 max, 0.977 min
+HTTP response codes:
+  code 200 -- 49
+```
+
+## 结果分析
+```
+1. 49 fetches, 1 max parallel, 686147 bytes, in 5.00346 seconds 
+  本次测试共发起了49个请求，最大并发数为1,总传输字节数686147字节，总运行时间为5.00346秒
+
+2. 14003 mean bytes/connection
+  每一个连接的传输字节数 686147/49=14003 bytes
+3. 9.79323 fetches/sec, 137135 bytes/sec
+  每秒请求数9.79323，每秒字节数137135
+4. msecs/connect: 0.438143 mean, 0.647 max, 0.225 min
+  每个连接的平均响应时间:0.438143,最大响应时间为0.647，最小响应时间为0.225 
+5. msecs/first-response: 1.69065 mean, 11.311 max, 0.977 min
+
+6. HTTP response codes:
+      code 200 -- 49
+   http响应code为200的数量为49，和总请求数一致   
+```
+特殊说明：这里，我们一般会关注到的指标是fetches/sec、msecs/connect
+他们分别对应的常用性能指标参数
+Qpt-每秒响应用户数和response time，每连接响应用户时间。
+
+### 准备url文件，可以包含多个url
 
 ```bash
 $ cat first.txt
 http://localhost:4000/
 ```
 
-## 1.基于并发数
+### 1.基于并发数
+http_load -parallel 10 -seconds 5  first.txt
 ```
-$ http_load -parallel 10 -seconds 5  first.txt
+$ http_load -p 10 -s 5  first.txt
 14863 fetches, 10 max parallel, 2.08127e+08 bytes, in 5.00013 seconds
 14003 mean bytes/connection
 2972.52 fetches/sec, 4.16242e+07 bytes/sec
@@ -63,9 +105,10 @@ HTTP response codes:
   code 200 -- 14863
 ```
 
-## 2.基于每秒速率
+### 2.基于每秒速率
+http_load -rate 10 -seconds 5  first.txt
 ```
-$ http_load -rate 10 -seconds 5  first.txt
+$ http_load -r 10 -s 5 first.txt
 49 fetches, 1 max parallel, 686147 bytes, in 5.00141 seconds
 14003 mean bytes/connection
 9.79724 fetches/sec, 137191 bytes/sec
@@ -78,4 +121,9 @@ HTTP response codes:
 # 实际应用场景
 
 
+# TODO
+* 能测试get请求，post请求还不知道怎么配置
+
+
 # 参考资料
+[http_load使用详解](https://www.cnblogs.com/shijingjing07/p/6539179.html)
