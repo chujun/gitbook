@@ -72,7 +72,7 @@ HTTP response codes:
 2. 14003 mean bytes/connection
   每一个连接的传输字节数 686147/49=14003 bytes
 3. 9.79323 fetches/sec, 137135 bytes/sec
-  每秒请求数9.79323，每秒字节数137135
+  每秒响应用户数9.79323，每秒字节数137135
 4. msecs/connect: 0.438143 mean, 0.647 max, 0.225 min
   每个连接的平均响应时间:0.438143,最大响应时间为0.647，最小响应时间为0.225 
 5. msecs/first-response: 1.69065 mean, 11.311 max, 0.977 min
@@ -83,9 +83,9 @@ HTTP response codes:
 ```
 特殊说明：这里，我们一般会关注到的指标是fetches/sec、msecs/connect
 他们分别对应的常用性能指标参数
-Qpt-每秒响应用户数和response time，每连接响应用户时间。
+qpt-每秒响应用户数和response time，每连接响应用户时间。
 
-### 准备url文件，可以包含多个url
+### 准备url文件，可以包含多个url,文件格式是每行一个URL
 
 ```bash
 $ cat first.txt
