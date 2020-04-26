@@ -6,6 +6,9 @@
     * [搭建](gitbook-start/gitbook搭建.md)
     * [结构](gitbook-start/gitbook结构.md)
     * [插件](gitbook-start/插件.md)
+---
+* [高清设计图片](曾经画的那些图/README.md)
+    * [OA查询部门领导逻辑](曾经画的那些图/OA查询部门领导逻辑.md)
 ---    
 * [性能测试](性能测试/README.md)
    * [性能测试工具](性能测试/性能测试工具/http_load.md)
