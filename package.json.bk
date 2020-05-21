@@ -2,17 +2,15 @@
   "name": "gitbook",
   "version": "1.0.0",
   "description": "这是一个简单的gitbook教程",
-  "main": "index.js",
+  "main": "commitlint.config.js",
   "dependencies": {
     "gitbook-plugin-accordion": "^1.1.3",
     "gitbook-plugin-advanced-emoji": "^0.2.2",
     "gitbook-plugin-anchors": "^0.7.1",
     "gitbook-plugin-anchor-navigation-ex": "^1.0.14",
-    "gitbook-plugin-back-to-top-button": "^0.1.4",
-    "gitbook-plugin-expandable-chapters-small": "^0.1.7",
     "gitbook-plugin-chapter-fold": "^0.0.4",
-    "gitbook-plugin-donate": "^1.0.2",
     "gitbook-plugin-code": "^0.1.0",
+    "gitbook-plugin-donate": "^1.0.2",
     "gitbook-plugin-favicon": "^0.0.2",
     "gitbook-plugin-github": "^2.0.0",
     "gitbook-plugin-github-buttons": "^3.0.0",
@@ -20,11 +18,7 @@
     "gitbook-plugin-splitter": "^0.0.8",
     "gitbook-plugin-search-pro": "^2.0.2"
   },
-  "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "husky": "^4.2.5"
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

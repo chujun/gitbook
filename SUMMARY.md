@@ -19,3 +19,6 @@
 * [jvm](jvm/README.md)
     * [jvm常用工具](jvm/jvm常用工具/README.md)
         * [jstat](jvm/jvm常用工具/jstat.md)
+* [开发工具](开发工具/README.md)
+    * [git](开发工具/git/README.md)
+        * [commit message规范](开发工具/git/commitmessage规范.md)
