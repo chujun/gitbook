@@ -216,7 +216,7 @@ Restart after change in file gitbook搭建.md
 
 ### 页面报错，无法加载
 1. 可能是报错了，重新发布下即可
-2. 终极大法可以考虑删除大法，直接把项目下的_book目录和node_mudules目录删除，重新发布gitbook项目
+2. 终极大法可以考虑删除大法，直接把项目下的_book目录和node_mudules目录，以及package.json,package-lock.json(node.js相关)删除，重新发布gitbook项目
 
 ## 浏览器浏览gitbook
 ![浏览](img/初次浏览效果.png)
