@@ -29,3 +29,6 @@
         * [commit message规范](开发环境/git/commitmessage规范.md)
     * [pycharm](开发环境/pycharm/README.md)
         * [永久激活方法](开发环境/pycharm/永久激活方法.md)
+---
+* [自动化测试框架](自动化测试框架/README.md)
+    * [robotframework](自动化测试框架/robotframework/README.md)
