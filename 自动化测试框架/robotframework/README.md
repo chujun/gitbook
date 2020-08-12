@@ -17,6 +17,9 @@ robot --help
 
 # 文档
 * [standard-library](http://robotframework.org/robotframework/#standard-libraries)
+## robotframework db数据库
+*[github Robotframework-Database-Library](http://franz-see.github.io/Robotframework-Database-Library/)
+*[https://github.com/PyMySQL/PyMySQL](https://github.com/PyMySQL/PyMySQL)
 
 # 开发环境搭建
 ## pycharm + 插件intellibot +插件Robot Framework support
