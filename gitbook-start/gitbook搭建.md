@@ -233,6 +233,21 @@ gitbook build
 当然也可以指定插件版本安装，碰到再聊
 ![浏览](img/安装插件效果图.png)
 
+# 问题列表
+## gitbook install / 安装失败
+```
+info: installing 13 plugins using npm@3.9.2 
+info:  
+info: installing plugin "sharing-plus" 
+info: install plugin "sharing-plus" (*) from NPM with version 0.0.2 
+loadCurrentTree           | |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+/usr/local/lib/node_modules/gitbook-cli/node_modules/npm/node_modules/graceful-fs/polyfills.js:287
+      if (cb) cb.apply(this, arguments)
+                 ^
+
+TypeError: cb.apply is not a function
+    at /usr/local/lib/node_modules/gitbook-cli/node_modules/npm/node_modules/graceful-fs/polyfills.js:287:18
+```
 # TODO 
 1. gitbook plugin插件库官网竟然链接失效了
 
