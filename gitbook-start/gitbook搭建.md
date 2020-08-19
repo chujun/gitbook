@@ -234,7 +234,7 @@ gitbook build
 ![浏览](img/安装插件效果图.png)
 
 # 问题列表
-## gitbook install / 安装失败
+## gitbook install / 安装失败,未解决 TODO to be done
 ```
 info: installing 13 plugins using npm@3.9.2 
 info:  
