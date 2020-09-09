@@ -83,6 +83,7 @@
 ## 优化
 * 多个动作处理器执行结果优雅处理
 * 幂等返回结果
+* 多条件处理器支持分组注解
 
 ## 展望
 * 一个业务系统中支持多个状态机
@@ -101,4 +102,5 @@ plantuml
 
 # 资料
 [通用订单状态模型梳理](https://www.processon.com/diagraming/5eb664cfe401fd16f4274ba3)
+
 [订单状态流执行过程分析](https://www.processon.com/diagraming/5ea5674763768974669292e9)
