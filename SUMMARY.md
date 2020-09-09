@@ -35,5 +35,5 @@
 * [自动化测试框架](自动化测试框架/README.md)
     * [robotframework](自动化测试框架/robotframework/README.md)
 ---
-* [状态流设计](状态流设计/README.md)
-    * [trade-in-center状态流设计](状态流设计/trade-in-center/trade-in-center状态流设计.md)
+* [状态机设计](状态机设计/README.md)
+    * [trade-in-center状态机设计](状态机设计/trade-in-center/trade-in-center状态机设计.md)
