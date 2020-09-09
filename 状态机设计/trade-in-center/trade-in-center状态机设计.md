@@ -39,6 +39,7 @@
 业务动作驱动订单机状态变化
 
 ## 3.2模型
+[通用订单状态模型梳理](https://www.processon.com/diagraming/5eb664cfe401fd16f4274ba3)
 * 流程(Process)
 * 节点(ProcessNode)
 * 流向(ProcessFlow)
@@ -65,6 +66,7 @@
 
 ## 3.4组件交互
 [订单流组件交互图](https://www.processon.com/diagraming/5f5882677d9c08028bddedfd)
+
 [订单状态流执行过程分析](https://www.processon.com/diagraming/5ea5674763768974669292e9)
 
 # 4.实现--->show me code
