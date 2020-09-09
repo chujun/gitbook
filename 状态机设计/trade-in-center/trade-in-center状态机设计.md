@@ -57,6 +57,7 @@
 
 
 ## 组件交互
+[订单流组件交互图](https://www.processon.com/diagraming/5f5882677d9c08028bddedfd)
 [订单状态流执行过程分析](https://www.processon.com/diagraming/5ea5674763768974669292e9)
 
 # 4.实现--->show me code
