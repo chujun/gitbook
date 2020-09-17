@@ -34,6 +34,10 @@
 	* [trade-in-center](状态机设计/trade-in-center/README.md)
 		* [trade-in-center状态机设计.md](状态机设计/trade-in-center/trade-in-center状态机设计.md)
 ---
+* [数据库](数据库/README.md)
+	* [自动生成大数据表](数据库/自动生成大数据表/README.md)
+		* [mysql快速生成大数据量表.md](数据库/自动生成大数据表/mysql快速生成大数据量表.md)
+---
 * [jvm](jvm/README.md)
 	* [jvm常用工具](jvm/jvm常用工具/README.md)
 		* [jstat.md](jvm/jvm常用工具/jstat.md)
