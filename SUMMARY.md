@@ -21,6 +21,7 @@
 ---
 * [mybatis源码学习](mybatis学习/README.md)
     * [源码学习](mybatis学习/源码学习/README.md)
+        * [环境准备](mybatis学习/源码学习/环境准备.md)
 ---
 * [jvm](jvm/README.md)
     * [jvm常用工具](jvm/jvm常用工具/README.md)
@@ -31,9 +32,17 @@
         * [commit message规范](开发环境/git/commitmessage规范.md)
     * [pycharm](开发环境/pycharm/README.md)
         * [永久激活方法](开发环境/pycharm/永久激活方法.md)
+    * [c](开发环境/c/README.md)
+        * [sublimeAndGcc搭建C开发环境](开发环境/c/sublimeAndGcc搭建C开发环境.md)
 ---
 * [自动化测试框架](自动化测试框架/README.md)
     * [robotframework](自动化测试框架/robotframework/README.md)
 ---
 * [状态机设计](状态机设计/README.md)
     * [trade-in-center状态机设计](状态机设计/trade-in-center/trade-in-center状态机设计.md)
+
+---
+* [系统性能优化](系统性能优化/README.md)
+    * [极客时间-系统性能优化必知必会课程](系统性能优化/极客时间-系统性能优化必知必会课程/README.md)
+        * [CPU缓存](系统性能优化/极客时间-系统性能优化必知必会课程/CPU缓存.md)
+        * [内存池分配](系统性能优化/极客时间-系统性能优化必知必会课程/内存池分配.md)
