@@ -22,8 +22,7 @@ def generate_new_file(content, file_name):
 
 
 def generate_file_header():
-    return '''
-# Summary
+    return '''# Summary
     
 * [介绍](README.md)
     
