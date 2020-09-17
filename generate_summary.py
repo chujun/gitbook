@@ -3,7 +3,7 @@
 import os
 import os.path
 
-exclude_paths = ['__pycache__', '.idea', '_book', 'node_modules', 'img', 'README.md']
+exclude_paths = ['__pycache__', 'lib', '.idea', '_book', 'node_modules', 'img', 'README.md']
 level_max_limit = 3
 file_name = 'SUMMARY.md'
 
@@ -44,14 +44,14 @@ def generate_dir_content(dir_name, sub_paths, level):
             continue
         if not x.startswith('.') and x not in exclude_paths:
             dir_item_content = ''
-            for tab in range(0, level):
+            for tab in range(1, level):
                 dir_item_content += '\t'
             sub_path = ''
             for path in sub_paths:
                 sub_path += path + '/'
             md = x
             if is_dir:
-                md = 'README.md'
+                md = os.path.join(x, 'README.md')
             dir_item_content += '* [%s](%s%s)\n' % (x, sub_path, md)
             content += dir_item_content
             if is_dir:
