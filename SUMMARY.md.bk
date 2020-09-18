@@ -18,6 +18,7 @@
 	* [c](开发环境/c/README.md)
 		* [sublimeAndGcc搭建C开发环境.md](开发环境/c/sublimeAndGcc搭建C开发环境.md)
 	* [git](开发环境/git/README.md)
+		* [git-lf上传大文件.md](开发环境/git/git-lf上传大文件.md)
 		* [commitmessage规范.md](开发环境/git/commitmessage规范.md)
 ---
 * [mybatis学习](mybatis学习/README.md)
