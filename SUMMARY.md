@@ -37,6 +37,8 @@
 * [数据库](数据库/README.md)
 	* [自动生成大数据表](数据库/自动生成大数据表/README.md)
 		* [mysql快速生成大数据量表.md](数据库/自动生成大数据表/mysql快速生成大数据量表.md)
+	* [book-高性能mysql-第三版](数据库/book-高性能mysql-第三版/README.md)
+		* [第二章MySQL基准测试.md](数据库/book-高性能mysql-第三版/第二章MySQL基准测试.md)
 ---
 * [jvm](jvm/README.md)
 	* [jvm常用工具](jvm/jvm常用工具/README.md)
