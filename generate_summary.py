@@ -3,7 +3,7 @@
 import os
 import os.path
 
-exclude_paths = ['__pycache__', 'lib', '.idea', '_book', 'node_modules', 'img', 'README.md']
+exclude_paths = ['__pycache__', 'lib', 'script', '.idea', '_book', 'node_modules', 'img', 'README.md']
 level_max_limit = 3
 file_name = 'SUMMARY.md'
 

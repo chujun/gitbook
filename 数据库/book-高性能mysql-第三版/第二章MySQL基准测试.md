@@ -73,6 +73,7 @@ TPS(每秒事务处),TPM(每分钟事务数)
 * 记录结果
 
 脚本分析
-TODO:cj to be done
+[script/mysql_analyze.sh](script/mysql_analyze.sh)
+
 # 资料
 [TPC-C](http://www.tpc.org/)
