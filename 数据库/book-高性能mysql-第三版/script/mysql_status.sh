@@ -15,12 +15,12 @@ while test -e $RUNFILE; do
 	sleep $sleep
 	ts="$(date +"TS %s.%N %F %T")"
 	loadavg="$(uptime)"
-	echo "$ts $loadavg">>$PERFIX-${file}-status
-	mysql -uroot -proot -e 'SHOW GLOBAL STATUS'>> $PERFIX-${file}-status &
-	echo "$ts $loadavg">>$PERFIX-${file}-innodbstatus
-	mysql -uroot -proot -e 'SHOW ENGINE INNODB STATUS\G'>>$PERFIX-${file}-innodbstatus &
-	echo "$ts $loadavg">>$PERFIX-${file}-processlist
-	mysql -uroot -proot -e 'SHOW FULL PROCESSLIST\G'>>$PERFIX-${file}-processlist &
+	echo "$ts $loadavg" >> $PERFIX-${file}-status
+	mysql -uroot -proot -e 'SHOW GLOBAL STATUS' >> $PERFIX-${file}-status &
+	echo "$ts $loadavg" >> $PERFIX-${file}-innodbstatus
+	mysql -uroot -proot -e 'SHOW ENGINE INNODB STATUS\G' >> $PERFIX-${file}-innodbstatus &
+	echo "$ts $loadavg" >> $PERFIX-${file}-processlist
+	mysql -uroot -proot -e 'SHOW FULL PROCESSLIST\G' >> $PERFIX-${file}-processlist &
 	echo $ts
 done
 echo Exiting because $RUNFILE does not exist.
