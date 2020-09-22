@@ -121,8 +121,11 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 可以用分析脚本输出作为gnuplot/R绘图的数据来源
 
 `./mysql-analyze.sh 5-sec-status-2020-09-22_05-status>QPS-per-5seconds`
+
 `gnuplot`
+
 `plot "QPS-per-5seconds" using 4 w lines title "QPS"`
+
 
 ```
  ./mysql-analyze.sh 5-sec-status-2020-09-22_05-status>QPS-per-5seconds
@@ -158,6 +161,112 @@ gnuplot>
 ```
 ![gnuplot绘制图效果截图](img/gnuplot绘制图效果截图.png)
 
+## 2.4基准测试工具
+### 2.4.1集成式测试工具
+* ab：Apache HTTP服务器基准测试工具。测试HTTP服务器每秒罪过处理多少请求，
+只能针对单个URL进行压力测试
+
+* http_load
+
+* JMeter
+### 2.4.2单组件式测试工具
+* mysqlslap
+[mysqlslap](http://dev.mysql.com/doc/refman/8.0/en/mysqlslap.html)
+
+* MySQL Benchmark Suite(sql-bench)
+
+* Super Smack
+[Super Smack访问不了](http://vegan.net/tony/supersmack/)
+
+* Database Test Suite
+[SourceForge](http://sourceforge.net/projects/osdldbt/)
+dbt2:免费的TPC-C OLTP测试工具
+
+* Percona's TPCC-MySQL Tool(good)
+作者自研的，专门为MySQL测试开发的
+简单测试会用sysbench替代
+[项目源码](https://launchpad.net/perconatools)
+[github最新地址](https://github.com/Percona-Lab/tpcc-mysql)
+
+* sysbench(good)
+[sysbench](https://launchpad.net/sysbench)
+[github最新地址](https://github.com/akopytov/sysbench)
+
+# 2.5基准测试案例
+## 2.5.1http_load
+urls.txt
+```
+http://www.mysqlperformanceblog.com/
+http://www.mysqlperformanceblog.com/page/2/
+http://www.mysqlperformanceblog.com/mysql-patches/
+http://www.mysqlperformanceblog.com/mysql-performance-presentations/
+http://www.mysqlperformanceblog.com/2006/09/06/slow-query-log-analyzes-tools/
+```
+
+```bash
+http_load -parallel 1 -seconds 10 urls.txt
+```
+
+执行结果
+
+一个线程跑10秒
+```bash
+chujun@chujundeMacBook-Pro  /tmp/benchmarks/http_load  cat urls.txt
+http://www.mysqlperformanceblog.com/
+http://www.mysqlperformanceblog.com/page/2/
+http://www.mysqlperformanceblog.com/mysql-patches/
+http://www.mysqlperformanceblog.com/mysql-performance-presentations/
+http://www.mysqlperformanceblog.com/2006/09/06/slow-query-log-analyzes-tools/
+ chujun@chujundeMacBook-Pro  /tmp/benchmarks/http_load  http_load -parallel 1 -seconds 10 urls.txt
+19 fetches, 1 max parallel, 3549 bytes, in 10 seconds
+186.789 mean bytes/connection
+1.9 fetches/sec, 354.9 bytes/sec
+msecs/connect: 233.618 mean, 308.646 max, 195.255 min
+msecs/first-response: 272.966 mean, 390.396 max, 211.834 min
+HTTP response codes:
+  code 302 -- 19
+```
+
+5个并发线程跑10秒
+```bash
+60 fetches, 5 max parallel, 9662 bytes, in 10.0006 seconds
+161.033 mean bytes/connection
+5.99966 fetches/sec, 966.146 bytes/sec
+msecs/connect: 559.017 mean, 4285.79 max, 194.143 min
+msecs/first-response: 258.62 mean, 476.163 max, 197.998 min
+HTTP response codes:
+  code 302 -- 60
+```
+
+根据访问速率做测试(例如每秒5次)
+```bash
+chujun@chujundeMacBook-Pro  /tmp/benchmarks/http_load  http_load -rate 5 -seconds 10 urls.txt
+47 fetches, 3 max parallel, 7897 bytes, in 10 seconds
+168.021 mean bytes/connection
+4.69999 fetches/sec, 789.698 bytes/sec
+msecs/connect: 208.598 mean, 272.19 max, 196.752 min
+msecs/first-response: 213.182 mean, 269.172 max, 201.517 min
+HTTP response codes:
+  code 302 -- 47
+```
+
+根据访问速率做测试(例如每秒20次)
+```bash
+ chujun@chujundeMacBook-Pro  /tmp/benchmarks/http_load  http_load -rate 20 -seconds 10 urls.txt
+191 fetches, 19 max parallel, 31671 bytes, in 10.0009 seconds
+165.817 mean bytes/connection
+19.0982 fetches/sec, 3166.81 bytes/sec
+msecs/connect: 222.823 mean, 1232.14 max, 194.791 min
+msecs/first-response: 219.753 mean, 708.067 max, 198.145 min
+HTTP response codes:
+  code 302 -- 191
+```
+
+## 2.5.2 MySQL基准测试套件
+TODO
 
 # 资料
 [TPC-C](http://www.tpc.org/)
+[ab](http://httpd.apache.org/docs/2.0/programs/ab.html)
+[http_load](http://www.acme.com/software/http_load/)
+[jmeter](http://jmeter.apache.org/)
