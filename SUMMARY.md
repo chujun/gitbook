@@ -40,6 +40,7 @@
 	* [book-高性能mysql-第三版](数据库/book-高性能mysql-第三版/README.md)
 		* [mysql如何开启慢查询.md](数据库/book-高性能mysql-第三版/mysql如何开启慢查询.md)
 		* [第三章服务器性能剖析.md](数据库/book-高性能mysql-第三版/第三章服务器性能剖析.md)
+		* [第四章Schema与数据类型优化.md](数据库/book-高性能mysql-第三版/第四章Schema与数据类型优化.md)
 		* [第二章MySQL基准测试.md](数据库/book-高性能mysql-第三版/第二章MySQL基准测试.md)
 ---
 * [jvm](jvm/README.md)
