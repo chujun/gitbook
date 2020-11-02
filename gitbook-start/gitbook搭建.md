@@ -234,7 +234,7 @@ gitbook build
 ![浏览](img/安装插件效果图.png)
 
 # 问题列表
-## gitbook install / 安装失败,未解决 TODO to be done
+## gitbook install / 安装失败,未解决 TODO:cj to be done
 ```
 info: installing 13 plugins using npm@3.9.2 
 info:  
@@ -248,7 +248,7 @@ loadCurrentTree           | |---------------------------------------------------
 TypeError: cb.apply is not a function
     at /usr/local/lib/node_modules/gitbook-cli/node_modules/npm/node_modules/graceful-fs/polyfills.js:287:18
 ```
-# TODO 
+# TODO:cj 
 1. gitbook plugin插件库官网竟然链接失效了
 
 # 参考资料
