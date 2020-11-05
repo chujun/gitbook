@@ -38,6 +38,7 @@
 	* [自动生成大数据表](数据库/自动生成大数据表/README.md)
 		* [mysql快速生成大数据量表.md](数据库/自动生成大数据表/mysql快速生成大数据量表.md)
 	* [book-高性能mysql-第三版](数据库/book-高性能mysql-第三版/README.md)
+		* [5创建高性能的索引.md](数据库/book-高性能mysql-第三版/5创建高性能的索引.md)
 		* [mysql如何开启慢查询.md](数据库/book-高性能mysql-第三版/mysql如何开启慢查询.md)
 		* [第三章服务器性能剖析.md](数据库/book-高性能mysql-第三版/第三章服务器性能剖析.md)
 		* [第四章Schema与数据类型优化.md](数据库/book-高性能mysql-第三版/第四章Schema与数据类型优化.md)

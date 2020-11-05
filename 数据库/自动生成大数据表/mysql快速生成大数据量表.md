@@ -54,7 +54,7 @@ FLOOR(Rand() * 100),NOW() FROM tmp_table;
 Query OK, 1000000 rows affected (10.37 sec)
 Records: 1000000 Duplicates: 0 Warnings: 0
 ```
-本机mac一千万数据执行差不多执行了186秒
+本机mac一千万数据执行差不多执行了3分钟左右
 
 ### 5.更新创建时间字段让插入的创建时间更加随机
 ```sql

@@ -86,7 +86,57 @@ Mysql并不原生支持物化视图(第7章详细讨论这个视图细节)
 ![b案例数据库方案设计网站全局计数器](img/four/b案例数据库方案设计网站全局计数器.png)
 
 #4.5加快ALTER TABLE操作的速度
-TODO:cj to be done 
+MySQl的ALTER TABLE操作的性能对大表来说是个大问题.
+耗时多的可能需要花费数个小时
+
+常用技巧
+* 1.现在一台不提供服务的机器上执行ALTER TABLE操作，然后和提供服务的主库进行切换    
+* 2."影子拷贝"
+含义:用要求的表结构创建一张和源表无关的新表，然后通过重命名和删表操作交换两张表
+
+参考工具完成影子拷贝
+* [Facebook数据库运维团队 online schema change工具](https://launchpad.net/mysqlatfacebook)
+* [Shlomi Noach的openark toolkit](http://code.openark.org)
+* [Percona Toolkit](http://www.percona.com/software)
+
+案例
+有两种方式改变或者删除一个列的默认值(一种方法很快，另外一种则很慢)
+
+先看慢的方式
+```mysql
+ALTER TABLE sakila.film 
+MODIFY COLUMN rental_duration TINYINT(3) NOT NULL DEFAULT 5;
+```
+SHOW STATUS显示这个语句做了1000次读和1000次插入操作
+===>它拷贝了整张表到一张新表
+
+(TODO:cj 观看哪一个指标呢,实操尝试通过SHOW status like '%read%'和show status like '%write%'
+观察100w表t_user的修改指标没有看出来)
+![read info before modify column](img/four/1read.png)
+![write info before modify column](img/four/1write.png)
+![default 1 read info after modify column](img/four/2read.png)
+![default 1 write info after modify column](img/four/2write.png)
+![next default 10 read info after modify column](img/four/3read.png)
+![next default 10 write info after modify column](img/four/3write.png)
+
+快的方式
+
+理论上mysql列的默认值实际上存在表的.frm文件中，所以可以直接修改这个文件而不需要改动表本身.然后Mysql
+还没有采用这种优化方法，所有的MODIFY COLUMN操作都将导致表重建
+
+另一种快的方法是通过ALTER COLUMN操作来改变列的默认值
+```mysql
+ALTER TABLE sakila.film
+ALTER COLUMN rental_duration SET DEFAULT 5;
+```
+这个语句会直接修改.frm文件而不涉及表结构。所以这个操作是非常快的。
+(存疑:注意实际操作了一波t_user表1000w数据,两种方式速度是一样快，都在10ms级别
+,本机mysql5.8有可能是后面优化了一波，相对于本书版本来说)
+
+##4.5.1只修改.frm文件
+黑科技，看看就好了
+
+
 
 # 资料
 * 书籍数据库设计方面基础知识,Beginning Database Design(Clare Churcher)
