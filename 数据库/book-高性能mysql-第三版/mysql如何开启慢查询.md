@@ -48,13 +48,37 @@ SET timestamp=1601025742;
 select SLEEP(2);
 
 ```
+# 解析和统计mysql慢查询日志工具 mysqldumpslow
+具体查看mysqldumpslow -help说明(超级简单),常用参数-s,-a,-r,-t等
+```
+mysqldumpslow -s at,al /Users/chujun/logs/mysql/data/slow.log
+
+Reading mysql slow query log from /Users/chujun/logs/mysql/data/slow.log
+Count: 1  Time=0.39s (0s)  Lock=0.00s (0s)  Rows=10067.0 (10067), root[root]@localhost
+  select * from t_user where c_city_id=N or c_user_id='S'
+
+Count: 1  Time=0.28s (0s)  Lock=0.00s (0s)  Rows=1.0 (1), root[root]@localhost
+  SELECT N
+
+Count: 1  Time=11.00s (11s)  Lock=0.00s (0s)  Rows=300.0 (300), root[root]@localhost
+  SELECT * FROM `trade_in_center`.`t_user_1q` ORDER BY `c_province_id` DESC LIMIT N OFFSET N
+
+Count: 1  Time=0.25s (0s)  Lock=0.43s (0s)  Rows=6.0 (6), root[root]@localhost
+  SELECT ordinal_position as ordinal_position,column_name as column_name,column_type AS data_type,character_set_name as character_set,collation_name as collation,is_nullable as is_nullable,column_default as column_default,extra as extra,column_name AS foreign_key,column_comment AS comment FROM information_schema.columns WHERE table_schema='S'AND table_name='S'
+
+Count: 3  Time=0.34s (1s)  Lock=0.00s (0s)  Rows=10067.0 (30201), root[root]@localhost
+  select * from t_user where c_city_id=N
+
+Count: 2  Time=0.78s (1s)  Lock=0.00s (0s)  Rows=300.0 (600), root[root]@localhost
+  SELECT * FROM `trade_in_center`.`t_user` ORDER BY `c_name` DESC LIMIT N OFFSET N
+```
 
 # 问题列表
 ## 1.mysql服务器启动后，其他配置项都正常，但是slow_query_log未为off
 ### 解决
 一开始以为是配置问题，手动set global设置，提示文件slow.log无法创建(具体错误不记得了)
 ，手动创建出来后，再重启mysql服务器，slow_query_log就为on了
-### TODO:cj 待解决，如何自动创建slow.log
+### mac保护机制无法创建目录和文件的原因,规避掉保护目录
 
 ## 2.如何定位my.cnf文件
 ```bash
