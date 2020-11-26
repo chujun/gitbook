@@ -57,6 +57,8 @@
 		* [查询.md](阿里云/sls阿里云日志/查询.md)
 ---
 * [java](java/README.md)
+	* [maven](java/maven/README.md)
+		* [常用命令.md](java/maven/常用命令.md)
 	* [java那些年踩过的坑](java/java那些年踩过的坑/README.md)
 		* [double参与运算.md](java/java那些年踩过的坑/double参与运算.md)
 		* [jpa.md](java/java那些年踩过的坑/jpa.md)
