@@ -45,6 +45,7 @@
 		* [5创建高性能的索引.md](数据库/book-高性能mysql-第三版/5创建高性能的索引.md)
 		* [mysql如何开启慢查询.md](数据库/book-高性能mysql-第三版/mysql如何开启慢查询.md)
 		* [第三章服务器性能剖析.md](数据库/book-高性能mysql-第三版/第三章服务器性能剖析.md)
+		* [6查询性能优化.md](数据库/book-高性能mysql-第三版/6查询性能优化.md)
 		* [第四章Schema与数据类型优化.md](数据库/book-高性能mysql-第三版/第四章Schema与数据类型优化.md)
 		* [第二章MySQL基准测试.md](数据库/book-高性能mysql-第三版/第二章MySQL基准测试.md)
 ---
