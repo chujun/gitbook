@@ -65,6 +65,10 @@
 		* [double参与运算.md](java/java那些年踩过的坑/double参与运算.md)
 		* [jpa.md](java/java那些年踩过的坑/jpa.md)
 ---
+* [脚本](脚本/README.md)
+	* [常用脚本列表](脚本/常用脚本列表/README.md)
+		* [generate_enum_md_file.md](脚本/常用脚本列表/generate_enum_md_file.md)
+---
 * [性能测试](性能测试/README.md)
 	* [gperftools.md](性能测试/gperftools.md)
 	* [性能测试工具](性能测试/性能测试工具/README.md)
