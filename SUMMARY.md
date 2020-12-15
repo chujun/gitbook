@@ -67,7 +67,6 @@
 ---
 * [脚本](脚本/README.md)
 	* [常用脚本列表](脚本/常用脚本列表/README.md)
-		* [generate_enum_md_file.md](脚本/常用脚本列表/generate_enum_md_file.md)
 ---
 * [性能测试](性能测试/README.md)
 	* [gperftools.md](性能测试/gperftools.md)
