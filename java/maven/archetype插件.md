@@ -18,6 +18,11 @@ maven项目搭建骨架
  archetype:integration-test (bound to the integration-test phase) is used to execute archetype integration tests by generating sample projects from the just built archetype.<br/>
  archetype:update-local-catalog (bound to the install phase) is used to update the local catalog.<br/>
 
+# archetype创建新项目生命周期
+* 1.用户选择一个想生成的archetype骨架
+* 2.配置需要的属性(groupId,artifactId,version,package)以及额外自定义的属性
+* 3.新项目生成
+
 # 实验
 ## 1.从已有archetype骨架中创建新项目
 一般archetype来源于远程仓库
@@ -114,9 +119,51 @@ mvn archetype:generate -DarchetypeCatalog=local
 * 没办法自定义自己想要的一些特性
 
 ## 3.根据已有的archetype项目编辑,发布archetype项目
-TODO:cj to be done
+```bash
+mvn archetype:create-from-project
+cd target/generated-sources/archetype/
+```
+```
+tree -L 4
+.
+├── pom.xml
+├── src
+│    ├── main
+│    │    └── resources
+│    │        ├── META-INF
+│    │        └── archetype-resources
+│    └── test
+│        └── resources
+│            └── projects
+└── target
+    ├── classes
+    │    ├── META-INF
+    │    │    └── maven
+    │    └── archetype-resources
+    │        ├── README.md
+    │        ├── WIKI.md
+    │        ├── __rootArtifactId__-interface
+    │        ├── __rootArtifactId__-model
+    │        ├── __rootArtifactId__-service
+    │        ├── __rootArtifactId__-task
+    │        ├── deploy.sh
+    │        └── pom.xml
+    ├── maven-archiver
+    │    └── pom.properties
+    ├── test-classes
+    │    └── projects
+    │        └── basic
+    └── trade-in-center-archetype-2.8.0.jar
 
-## 4.archetype定义额外的属性
+21 directories, 7 files
+
+```
+target目录里面都可以删除，然后编辑调整其他文件，最后在执行mvn install命令即可
+```
+mvn install
+```
+
+## 4.archetype定义额外需要的属性
 ```xml
 <archetype-descriptor name="basic">
   <requiredProperties>
