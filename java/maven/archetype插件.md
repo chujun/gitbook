@@ -163,6 +163,38 @@ target目录里面都可以删除，然后编辑调整其他文件，最后在�
 mvn install
 ```
 
+## 3.1发布到远程私服
+在pom文件中加上仓库信息
+```xml
+<distributionManagement>
+    <repository>
+      <id>nexus-releases</id>
+      <name>Nexus Release Repository</name>
+      <url>https://nexus.XXX.com/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <name>Nexus Snapshot Repository</name>
+      <url>https://nexus.XXX.com/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>aihuishou-nexus</id>
+      <name>Aihuishou Nexus Repository</name>
+      <url>https://nexus.XXX.com/content/groups/public</url>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+```
+执行部署命令即可
+```bash
+mvn deploy
+```
+
 ## 4.archetype定义额外需要的属性
 ```xml
 <archetype-descriptor name="basic">
@@ -438,7 +470,8 @@ packaged true:表示选择的文件集合将被生成/复制到package属性的�
 效率更高效一点
 
 # 创建一系列自定义archetype
-## TODO:cj 如何编译调整mvn archetype:create-from-project生成的
+详见参考资料6
+
 
 # 常用命令列表
 * mvn archetype:create-from-project
@@ -450,10 +483,12 @@ packaged true:表示选择的文件集合将被生成/复制到package属性的�
 # 不常用命令列表
 * mvn archetype:jar
 * mvn archetype:update-local-catalog
+* mvn archetype:crawl --->在本地仓库生成本地的archetype-catalog.xml
 
 # doc 
-[archetype index](http://maven.apache.org/archetype/index.html)
-[maven project](http://maven.apache.org/archetype/maven-archetype-plugin/specification/archetype-catalog.html)
-[Specification 解释了一系列问题](http://maven.apache.org/archetype/maven-archetype-plugin/specification/specification.html)
-[velocity user guide](http://velocity.apache.org/engine/devel/user-guide.html)
-[archetypeDescriptor](http://maven.apache.org/archetype/archetype-models/archetype-descriptor/archetype-descriptor.html)
+* 1.[archetype index](http://maven.apache.org/archetype/index.html)
+* 2.[maven project](http://maven.apache.org/archetype/maven-archetype-plugin/specification/archetype-catalog.html)
+* 3.[Specification 解释了一系列问题](http://maven.apache.org/archetype/maven-archetype-plugin/specification/specification.html)
+* 4.[velocity user guide](http://velocity.apache.org/engine/devel/user-guide.html)
+* 5.[archetypeDescriptor](http://maven.apache.org/archetype/archetype-models/archetype-descriptor/archetype-descriptor.html)
+* 6.[archetype:create-from-project](http://maven.apache.org/archetype/maven-archetype-plugin/create-from-project-mojo.html)
