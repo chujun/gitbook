@@ -86,6 +86,7 @@ mysql --verbose --help | grep my.cnf
     order of preference, my.cnf, $MYSQL_TCP_PORT,
 /etc/my.cnf /etc/mysql/my.cnf /usr/local/etc/my.cnf ~/.my.cnf
 ```
+mysql会议读取到的最后一个配置文件中的参数为准
 一个个查看文件是否存在
 
 # 资料
