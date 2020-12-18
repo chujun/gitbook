@@ -23,6 +23,24 @@ show variables like 'datadir';
   Time: 0.021s
 ```
 
+## 查看mysql innodb版本
+```
+show variables like 'innodb_version';
++----------------+--------+
+| Variable_name  | Value  |
++----------------+--------+
+| innodb_version | 8.0.21 |
++----------------+--------+
+1 row in set
+Time: 0.076s
+```
+## 观察innodb引擎运行状态
+后面最常用的命令
+```
+show engine innodb status\G;
+
+```
+
 # 1.2mysql体系结构
 ![1mysql体系结构图重要系列](img/important/1mysql体系结构图重要系列.png)
 区别其他数据库最重要的一个特点就是其插件式的存储引擎。
