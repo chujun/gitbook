@@ -160,11 +160,38 @@ explain select * from t_user order by c_name collate utf8mb4_bin limit 100 ;
 ```
 此时发现没法利用索引，需要使用文件排序.也可以理解，因为索引值大小需要通过数据列的校对规则比较
 
+在多字节字符集中，一个字符不再是一个字节。计算字符串的长度有
+* LENGTH()：返回字节长度
+* CHAR_LENGTH()：返回字符长度
+
+```
+mysql root@localhost:trade_in_center> select CHAR_LENGTH('你好');
++---------------------+
+| CHAR_LENGTH('你好') |
++---------------------+
+| 2                   |
++---------------------+
+1 row in set
+Time: 0.007s
+mysql root@localhost:trade_in_center> select LENGTH('你好');
++----------------+
+| LENGTH('你好') |
++----------------+
+| 6              |
++----------------+
+1 row in set
+Time: 0.010s
+```
 
 # 7.10全文索引
+了解下即可，使用还是看基于Lucene的ES吧
 
 # 7.11分布式(XA)事务
+mysql通过两阶段提交协议实现
 
 # 7.12查询缓存
+
+## 既然缓存能提高查询效率,那为什么mysql5.8中将查询缓存功能废弃呢
+cj:有意思问题
 
 # 7.13总结
