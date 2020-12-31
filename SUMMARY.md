@@ -6,6 +6,13 @@
 	* [性能优化配置](springcloud/性能优化配置/README.md)
 		* [feign性能优化配置之httpclient超时配置.md](springcloud/性能优化配置/feign性能优化配置之httpclient超时配置.md)
 ---
+* [书籍](书籍/README.md)
+	* [读书计划](书籍/读书计划/README.md)
+		* [2020读书清单.md](书籍/读书计划/2020读书清单.md)
+		* [2021读书清单.md](书籍/读书计划/2021读书清单.md)
+	* [个人](书籍/个人/README.md)
+		* [十分钟冥想.md](书籍/个人/十分钟冥想.md)
+---
 * [gitbook-start](gitbook-start/README.md)
 	* [常见用法说明.md](gitbook-start/常见用法说明.md)
 	* [插件.md](gitbook-start/插件.md)
@@ -42,6 +49,7 @@
 	* [自动生成大数据表](数据库/自动生成大数据表/README.md)
 		* [mysql快速生成大数据量表.md](数据库/自动生成大数据表/mysql快速生成大数据量表.md)
 	* [书籍-mysql技术内幕-Innodb存储引擎](数据库/书籍-mysql技术内幕-Innodb存储引擎/README.md)
+		* [附件innodb status.md](数据库/书籍-mysql技术内幕-Innodb存储引擎/附件innodb status.md)
 		* [1MySQL体系结构和存储引擎.md](数据库/书籍-mysql技术内幕-Innodb存储引擎/1MySQL体系结构和存储引擎.md)
 		* [2InnoDB存储引擎.md](数据库/书籍-mysql技术内幕-Innodb存储引擎/2InnoDB存储引擎.md)
 	* [book-高性能mysql-第三版](数据库/book-高性能mysql-第三版/README.md)
