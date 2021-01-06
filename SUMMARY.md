@@ -54,6 +54,7 @@
 		* [2InnoDB存储引擎.md](数据库/书籍-mysql技术内幕-Innodb存储引擎/2InnoDB存储引擎.md)
 	* [book-高性能mysql-第三版](数据库/book-高性能mysql-第三版/README.md)
 		* [7mysql高级特性.md](数据库/book-高性能mysql-第三版/7mysql高级特性.md)
+		* [9操作系统和硬件优化.md](数据库/book-高性能mysql-第三版/9操作系统和硬件优化.md)
 		* [5创建高性能的索引.md](数据库/book-高性能mysql-第三版/5创建高性能的索引.md)
 		* [mysql如何开启慢查询.md](数据库/book-高性能mysql-第三版/mysql如何开启慢查询.md)
 		* [第三章服务器性能剖析.md](数据库/book-高性能mysql-第三版/第三章服务器性能剖析.md)
