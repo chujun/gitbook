@@ -1,9 +1,18 @@
 
 # 2.1InnoDB存储引擎概述
 从mysql5.5版本开始是默认的表存储引擎
+OLTP应用中核心表的首选存储引擎
 第一个完整支持ACID事务的mysql存储引擎
 
 # 2.2Innodb存储引擎版本
+|mysql版本|innodb版本|描述|
+|---|---|---|
+|mysql5.1|老版本innodb||
+|mysql5.1|innodb1.0.x版本||
+|mysql5.5|innodb1.1.x版本||
+|mysql5.6|innodb1.2.x版本||
+
+![2Innodb各版本功能对比](img/two/2Innodb各版本功能对比.png)
 
 # 2.3InnoDB体系架构
 innodb存储引擎体系架构图重要系列
@@ -23,7 +32,7 @@ InnoDB存储引擎是多线程模型,后台有不同的后台线程，负责处�
 ### IO Thread
 Innodb 1.0版本主要有4中IO Thread，write，read，insert buffer和log IO thread.
 
-大量使用AIO(Async IO)来处理写IO请求,可以极大提高数据库性能
+大量使用AIO(Async IO)来处理写IO请求,io threade主要负责浙西io请求的回调(call back)处理.可以极大提高数据库性能
 查看io thread线程数信息
 ```
 #mysql5.7
@@ -81,7 +90,7 @@ Pending flushes (fsync) log: 0; buffer pool: 0
 * 之后就是4个read thread,4个write thread
 
 ### Purge Thread
-事务提交后，其所使用的undolog可能不再时序，因此需要来回收已经使用并分配的undo页。
+事务提交后，其所使用的undolog可能不再需要，因此需要来回收已经使用并分配的undo页。
 * innodb1.1版本之前，purge操作仅在InnoDB存储引擎的master thread中完成
 * 从innodb1.1版本开始，purge操作在独立线程中进行
   可以减轻master thread的工作，从而提高CPU的使用率
@@ -100,9 +109,82 @@ innodb1.2.x版本引入，作用将之前版本中脏页的刷新操作都放入
 
 ## 2.3.2内存
 ### 1缓冲池
+*问题之假如你设计innodb系统，innodb为什么引入缓冲池？*
+引入缓存也算是基于磁盘的数据库系统的通用设计思路吧
 
+innodb基于磁盘存储，记录按照页进行管理，属于基于磁盘的数据库系统(Disk-base Database)(了解数据库系统概述部分)
+
+因为总所周知的计算机CPU速度和磁盘速度之间的鸿沟，基于磁盘的数据库系统通常使用缓冲池技术来提高数据库的整体性能。
+
+*问题之innodb缓冲池工作机制* 
+内存区域
+* 在数据库进行读取页的操作，首先将从磁盘读取的页放在缓冲池中，这个过程称为将页FIX在缓冲池
+* 下次读取相同页时，首先判断该页是否在缓冲池中，如在则该页命中缓冲池，直接读取该页。否则读取磁盘上的页。
+* 对于数据库中页的修改操作，首先修改在缓冲池中的页(TODO:cj如果缓冲池中没有也先读到缓冲池中嘛，应该是的)，
+  然后再以一定的频率刷新到磁盘上。
+* 页从缓冲池刷新回磁盘操作并不是在每次页发生更新时触发，而是通过一种称为*checkpoint*的机制刷新回磁盘，为了提高数据库的整体性能
+
+连环问之自然想知道checkpoint是个啥，TODO:cj后面应该有介绍
+
+#### innodb缓冲池内存结构
+* 数据页
+* 索引页
+* undo页
+* 重做日志缓冲  
+* 插入缓冲(insert buffer)
+* 自适应哈希索引(adaptive hash index)
+* innodb存储的锁信息(lock info)
+* 数据字典信息(data dictionary)
+* 等等
+![2innodb缓冲池内存结构数据对象图重要系列](img/important/2innodb缓冲池内存结构数据对象图重要系列.png)
+
+
+配置*innodb_buffer_pool_size* 配置缓冲池大小
+*innodb_buffer_pool_instances* 配置缓冲池实例数量
+```
+# mysql5.7 uat
+SHOW VARIables like 'innodb%buffer%';
++-------------------------------------+----------------+
+| Variable_name                       | Value          |
++-------------------------------------+----------------+
+| innodb_buffer_pool_chunk_size       | 134217728      |
+| innodb_buffer_pool_dump_at_shutdown | ON             |
+| innodb_buffer_pool_dump_now         | OFF            |
+| innodb_buffer_pool_dump_pct         | 25             |
+| innodb_buffer_pool_filename         | ib_buffer_pool |
+| innodb_buffer_pool_instances        | 1              |
+| innodb_buffer_pool_load_abort       | OFF            |
+| innodb_buffer_pool_load_at_startup  | ON             |
+| innodb_buffer_pool_load_now         | OFF            |
+| innodb_buffer_pool_size             | 3087007744     |
+| innodb_change_buffer_max_size       | 25             |
+| innodb_change_buffering             | all            |
+| innodb_log_buffer_size              | 8388608        |
+| innodb_sort_buffer_size             | 1048576        |
++-------------------------------------+----------------+
+14 rows in set
+Time: 0.046s
+```
+可以通过show engine innodb status观察buffer pool信息
+![](img/two/2show%20engine%20innodb%20status观察buffer%20pool.png)
+
+
+
+```
+# mysql5.7 uat
+use information_schemal;
+select pool_id,pool_size,free_buffers,database_pages from innodb_buffer_pool_stats;
++---------+-----------+--------------+----------------+
+| pool_id | pool_size | free_buffers | database_pages |
++---------+-----------+--------------+----------------+
+| 0       | 188416    | 1024         | 177670         |
++---------+-----------+--------------+----------------+
+1 row in set
+Time: 0.029s
+```
 ### 2LRU List，Free List和Flush List
-
+TODO:cj to be done
 ### 3重做日志缓冲
 
 ### 4额外的内存池
+

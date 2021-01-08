@@ -23,6 +23,18 @@ show variables like 'datadir';
   Time: 0.021s
 ```
 
+## 查看mysql版本
+```
+select version();
++------------+
+| version()  |
++------------+
+| 5.7.28-log |
++------------+
+1 row in set
+Time: 0.033s
+```
+
 ## 查看mysql innodb版本
 ```
 show variables like 'innodb_version';
@@ -53,11 +65,12 @@ show engine innodb status\G;
 * 行锁设计
 * MVCC多版本并发控制，4种隔离级别，默认REPEATABLE级别
 * next-key locking策略避免幻读现象出现
+* 支持外键
 
 其他高性能，高可能功能
 * 插入缓存(insert buffer)
 * 二次写(double write)
-* 自适应哈希索引(adaptive hash index,貌似缓存已经在mysql处于待废弃状态了)
+* 自适应哈希索引(adaptive hash index)
 * 预读(read ahead)
 
 ## 1.3.2MyISAM存储引擎

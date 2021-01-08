@@ -23,6 +23,12 @@ mysql最大架构特点：插件式存储引擎
 # 资料
 ## 书籍
 * 1.MySQl技术内幕:Innodb存储引擎(第二版) 微信阅读
-
+* 2.黑皮书-数据库系统概述
+* 3.黑皮书-数据库系统:设计、实现和管理
 ## 
 * 1.[本书源码下载地址](http://www.hzbook.com)
+
+## 文章
+介绍了一个通用数据库系统的体系结构和如何设计
+[深入理解数据库系统](https://baijiahao.baidu.com/s?id=1661945111861714483&wfr=spider&for=pc)
+[印象笔记backup](https://app.yinxiang.com/shard/s23/nl/6983422/d4f1b213-38b3-4d48-93e0-64939f730e85/)
