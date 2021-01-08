@@ -112,7 +112,7 @@ innodb1.2.x版本引入，作用将之前版本中脏页的刷新操作都放入
 *问题之假如你设计innodb系统，innodb为什么引入缓冲池？*
 引入缓存也算是基于磁盘的数据库系统的通用设计思路吧
 
-innodb基于磁盘存储，记录按照页进行管理，属于基于磁盘的数据库系统(Disk-base Database)(了解数据库系统概述部分)
+innodb基于磁盘存储，记录按照页(默认每页16KB)进行管理，属于基于磁盘的数据库系统(Disk-base Database)(了解数据库系统概述部分)
 
 因为总所周知的计算机CPU速度和磁盘速度之间的鸿沟，基于磁盘的数据库系统通常使用缓冲池技术来提高数据库的整体性能。
 
@@ -124,7 +124,7 @@ innodb基于磁盘存储，记录按照页进行管理，属于基于磁盘的�
   然后再以一定的频率刷新到磁盘上。
 * 页从缓冲池刷新回磁盘操作并不是在每次页发生更新时触发，而是通过一种称为*checkpoint*的机制刷新回磁盘，为了提高数据库的整体性能
 
-连环问之自然想知道checkpoint是个啥，TODO:cj后面应该有介绍
+连环问题之自然想知道checkpoint是个啥，TODO:cj后面应该有介绍
 
 #### innodb缓冲池内存结构
 * 数据页
@@ -183,8 +183,57 @@ select pool_id,pool_size,free_buffers,database_pages from innodb_buffer_pool_sta
 Time: 0.029s
 ```
 ### 2LRU List，Free List和Flush List
-TODO:cj to be done
+*问题之innodb缓冲池怎么对内存区域进行管理的呢?*
+* 采用优化过的LRU算法(latest recented used,最近最少使用)
+
+优化点:
+* LRU列表中加入了midpoint位置。新读取到的页，虽然是最新访问的页，但并不是直接
+  放入到LRU列表的首部，而是放入到LRU列表的midpoint位置。（算法成为midpoint insert strategy）
+
+*连环问题之2与朴素的LRU算法相比，midpoint insert strategy算法有什么优势?*
+因为某些SQL操作(例如索引或者数据的扫描操作)可能会读取大量页数据，仅在本次查询中用到，后面就不需要了，
+如果将读取到页直接放到队首，会将真正活跃的页刷出。
+
+innodb_old_block_pct:控制该midpoint的位置，默认值为37(差不多3/8位置)
+midpoint之后的列表称为old列表，之前的列表称为new列表，简单理解new列表的页面都是最为活跃的热点数据。
+
+连环问题之3如何才能成为LRU列表new列表的热点数据
+引入了*innodb_old_blocks_time*配置项,表示页读取到mid位置后需要等待多久才会被加入LRU列表的热端,默认1000ms
+
+```
+information_schema> show variables like 'innodb_old%';
++------------------------+-------+
+| Variable_name          | Value |
++------------------------+-------+
+| innodb_old_blocks_pct  | 37    |
+| innodb_old_blocks_time | 1000  |
++------------------------+-------+
+2 rows in set
+Time: 0.031s
+```
+
+缓冲池页大小默认为16KB(这个数字很重要，请记住系列)
+
+page made young:当页从LRU列表的old部分加入到new部分，这个操作
+page not made young:页没有从old部分移动到new部分的操作(可能因为innodb_old_blocks_time设置原因)
+
+#### free list
+
+*问题之free列表作用*
+数据库刚启动时，LRU列表是空的，这时页都存放在free列表中
+当需要从缓冲池中分页时，首先从free列表中查找是否有可有的空闲页，如果有则将该页从free列表中删除，放入到lru列表中
+如无，则根据LRU算法，淘汰LRU列表末尾的页，将该内存空间分配给新的页
+
+参考资料网页1，里面解释地更详细
+
+
+
 ### 3重做日志缓冲
 
 ### 4额外的内存池
 
+
+# 资料
+## 网页
+* 1.[一看就懂的MySQL的FreeList机制](http://www.likecs.com/show-120096.html)
+* 1.1[印象笔记backup](https://app.yinxiang.com/shard/s23/nl/6983422/3b174bee-d40a-4be8-a178-902745cf3bb4)
