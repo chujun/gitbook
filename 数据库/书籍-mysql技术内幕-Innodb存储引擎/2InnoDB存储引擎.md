@@ -226,7 +226,112 @@ page not made young:页没有从old部分移动到new部分的操作(可能因�
 
 参考资料网页1，里面解释地更详细
 
+#### unzip_LRU列表
+压缩页，即将原本16KB的页压缩为1KB，2KB，4KB和8KB
+对于非16KB的页，通过unzip_LRU列表进行管理
 
+
+*问题之unzip_LRU怎样从缓冲池中分配内存页呢?*
+首先，在unzip_LRU列表中对不同压缩页大小页进行分别管理
+例如需要从缓冲池中申请页为4KB的大小，其过程如下:
+* 1.检查4KB的unzip_LRU列表，检查是否有可用的空闲页
+* 2.若有，则直接使用
+* 3.若物，则检查8KB的unzip_LRU列表
+* 4.若能够得到空闲页，将页分成2个4KB页，存放到4KB的unzip_LRU列表
+* 5.若不能得到空闲页,从LRU列表中申请一个16KB的页，将页分为1个8KB的页、2个4KB的页，
+  分别存放到对应的unzip_LRU列表中
+  
+*连环问题之1unzip_LRU列表小页越来越多如何处理?*
+TODO:cj猜测是有一种回收机制，例如处理碎片时针对不用的unzip_LRU列表重新释放出来
+
+
+
+也可以通过information_schema中innodb_buffer_pool_stats观察缓冲池的运行状态
+```
+select * from infomation_schema.innodb_buffer_pool_stats;
+***************************[ 1. row ]***************************
+POOL_ID                          | 0
+POOL_SIZE                        | 188416
+FREE_BUFFERS                     | 1024
+DATABASE_PAGES                   | 182050
+OLD_DATABASE_PAGES               | 67182
+MODIFIED_DATABASE_PAGES          | 22580
+PENDING_DECOMPRESS               | 0
+PENDING_READS                    | 0
+PENDING_FLUSH_LRU                | 0
+PENDING_FLUSH_LIST               | 0
+PAGES_MADE_YOUNG                 | 50536893
+PAGES_NOT_MADE_YOUNG             | 1011209808
+PAGES_MADE_YOUNG_RATE            | 6.40092576435298e-10
+PAGES_MADE_NOT_YOUNG_RATE        | 0.0
+NUMBER_PAGES_READ                | 34386507
+NUMBER_PAGES_CREATED             | 1923740
+NUMBER_PAGES_WRITTEN             | 7508068
+PAGES_READ_RATE                  | 0.0
+PAGES_CREATE_RATE                | 6.40092576435298e-10
+PAGES_WRITTEN_RATE               | 8.961296070094172e-09
+NUMBER_PAGES_GET                 | 75620777266
+HIT_RATE                         | 1000
+YOUNG_MAKE_PER_THOUSAND_GETS     | 0
+NOT_YOUNG_MAKE_PER_THOUSAND_GETS | 0
+NUMBER_PAGES_READ_AHEAD          | 2223703
+NUMBER_READ_AHEAD_EVICTED        | 26292
+READ_AHEAD_RATE                  | 0.0
+READ_AHEAD_EVICTED_RATE          | 0.0
+LRU_IO_TOTAL                     | 105
+LRU_IO_CURRENT                   | 0
+UNCOMPRESS_TOTAL                 | 0
+UNCOMPRESS_CURRENT               | 0
+```
+也可以通过innodb_buffer_page_lru观察每个LRU列表中每个页的具体信息
+```
+select table_name,space,page_number,page_type from innodb_buffer_page_lru where space=0;
++-------------------+-------+-------------+-------------------+
+| table_name        | space | page_number | page_type         |
++-------------------+-------+-------------+-------------------+
+| <null>            | 0     | 50986       | IBUF_INDEX        |
+| <null>            | 0     | 51524       | IBUF_INDEX        |
+| <null>            | 0     | 1811        | IBUF_INDEX        |
+| `SYS_COLUMNS`     | 0     | 49524       | INDEX             |
+| <null>            | 0     | 98346       | UNDO_LOG          |
+| <null>            | 0     | 350         | UNDO_LOG          |
+| <null>            | 0     | 16438       | UNDO_LOG          |
+| <null>            | 0     | 92027       | UNDO_LOG          |
+| <null>            | 0     | 16401       | UNDO_LOG          |
+| <null>            | 0     | 92020       | UNDO_LOG          |
+| `SYS_TABLES`      | 0     | 385         | INDEX             |
+| `SYS_COLUMNS`     | 0     | 3168        | INDEX             |
+| `SYS_COLUMNS`     | 0     | 49515       | INDEX             |
+| `SYS_COLUMNS`     | 0     | 417         | INDEX             |
+| `SYS_COLUMNS`     | 0     | 471         | INDEX             |
+| `SYS_COLUMNS`     | 0     | 647         | INDEX             |
+| `SYS_COLUMNS`     | 0     | 685         | INDEX             |
+| `SYS_COLUMNS`     | 0     | 432         | INDEX             |
+| `SYS_COLUMNS`     | 0     | 668         | INDEX             |
+| `SYS_COLUMNS`     | 0     | 684         | INDEX             |
+| `SYS_TABLES`      | 0     | 2080        | INDEX             |
+| `SYS_COLUMNS`     | 0     | 420         | INDEX             |
+| `SYS_COLUMNS`     | 0     | 49529       | INDEX             |
+| `SYS_INDEXES`     | 0     | 55491       | INDEX             |
+| `SYS_COLUMNS`     | 0     | 3149        | INDEX             |
+| `SYS_COLUMNS`     | 0     | 3150        | INDEX             |
+| `SYS_COLUMNS`     | 0     | 3145        | INDEX             |
+| <null>            | 0     | 81977       | UNDO_LOG          |
+| <null>            | 0     | 91997       | UNDO_LOG          |
+| `SYS_TABLES`      | 0     | 567         | INDEX             |
+| <null>            | 0     | 32769       | IBUF_BITMAP       |
+| `SYS_INDEXES`     | 0     | 514         | INDEX             |
+```
+
+在innodb_buffer_page_lru中观察unzip_LRU列表中的页
+正常LRU列表中的compressed_size值为0
+
+```
+select table_name,space,page_number,compressed_size from innodb_buffer_page_lru 
+where compressed_size <>0;
+```
+2innodb_buffer_page_lru观察unzip_LRU列表截图
+![2innodb_buffer_page_lru观察unzip_LRU列表](img/two/2innodb_buffer_page_lru观察unzip_LRU列表.png)
 
 ### 3重做日志缓冲
 
