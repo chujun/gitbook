@@ -334,12 +334,87 @@ where compressed_size <>0;
 2innodb_buffer_page_lru观察unzip_LRU列表截图
 ![2innodb_buffer_page_lru观察unzip_LRU列表](img/two/2innodb_buffer_page_lru观察unzip_LRU列表.png)
 
-### 3重做日志缓冲
+### 3重做日志缓冲(redo log buffer)
+innodb将重做日志先放到这个缓冲区，然后按一定频率将其刷新到重做日志文件。
+
+*重做日志缓冲大小设置建议*
+一般不需要设置的很大，一般每一秒中会将重做日志缓冲刷新到日志文件，
+因此保证每秒产生的事务量在这个缓冲大小即可。
+
+该值由*innodb_log_buffer_size*控制，默认为16MB(mysql8,5.7版本默认为8MB)
+
+在通常情况下8MB的重做日志缓冲池足以满足绝大部分的应用
+
+####问题之重做日志缓冲刷新时机
+* master thread每一秒将重做日志缓冲刷新到重做日志文件
+* 每个事物提交时会将重做日志缓冲刷新到重做日志文件(保证数据库的ACID)
+* 当重做日志缓冲池剩余空间小于1/2时，重做日志缓冲刷新到重做日志文件
+
+后续见重做日志文件的存在意义
+
+连环问题之重做日志一定能保证数据库事务不丢失嘛
+为了保证事务ACID的D(Durability持久性)的要求
+不一定，因为有重做日志缓存的存在，所以一般最多可能有1秒的重做日志缓存失效
 
 ### 4额外的内存池
+对内存管理通过内存堆(heap)方式进行
+而对一些数据结构本身的内存进行分配时，需要从额外的内存池中进行申请。
+
+例如分配了缓冲池，但是每个缓冲池中的帧缓冲(frame buffer)还有对应的缓冲
+控制对象(buffer control block)，这些对象记录了一些诸如
+LRU、锁、等待等信息，而这个对象的内存需要从额外内存池中申请。
+
+# 2.4Checkpoint技术
+问题背景
+脏页:
+例如一条DML语句，如update/delete改变了页中的记录，那么此时页是脏的，即
+缓冲池中的页的版本要比磁盘的新。
+自然地，数据库需要将新版本的页从缓冲池刷新到磁盘。
+
+为了处理异步刷新脏页问题引入了checkpoint概念
+
+*checkpoint干的核心事情就是将脏页从缓冲池刷新到磁盘*
+
+引入checkpoint检查点技术的目的是解决以下问题
+* 缩短数据库启动的恢复时间
+* 缓冲池不够用时，将脏页刷新到磁盘
+* 重做日志不可用时，刷新脏页
+
+进一步说明
+
+1.当数据库发生宕机时，数据库不需要重做所有的日志，因为checkpoint之前的页都已经刷新回磁盘。
+故数据库只需对checkpoint后的重做日志进行恢复，这样可以大大缩短恢复时间
+
+2.当缓冲池不够用时，根据LRU算法会溢出最近最少使用的页，若此页为脏页，那么需要强制执行
+checkpoint，将脏页也就是页的新版本刷会磁盘。
+
+3.重做日志出现不可用的情况是
+当前事务数据库系统对重做日志的设计都是循环使用的(文件组，详见第三章重做日志文件一节)，并不是让其无限增大的，也没有必要。
+重做日志可以被重用的部分是指这些重做日志已经不再需要，即当数据库发生宕机时，
+数据库恢复操作不需要这部分的重做日志，因此这部分就可以被覆盖重用。
+
+## LSN(Log Sequence Number)
+innodb通用，用于标记版本，8字节数据，单位是字节。
+每个页，重做日志，checkpoint都有LSN
+使用show engine innodb status观察
+```
+---
+LOG
+---
+Log sequence number 2992140559934
+Log flushed up to   2992140557755
+Pages flushed up to 2991952365634
+Last checkpoint at  2991952365634
+0 pending log flushes, 0 pending chkp writes
+125605471 log i/o's done, 35.60 log i/o's/second
+----------------------
+```
 
 
 # 资料
 ## 网页
 * 1.[一看就懂的MySQL的FreeList机制](http://www.likecs.com/show-120096.html)
 * 1.1[印象笔记backup](https://app.yinxiang.com/shard/s23/nl/6983422/3b174bee-d40a-4be8-a178-902745cf3bb4)
+
+* 2.[MySQL checkpoint深入分析](https://www.cnblogs.com/geaozhang/p/7341333.html)
+* 2.1[印象笔记backup](https://app.yinxiang.com/shard/s23/nl/6983422/dc34034c-34c9-4b75-a89f-c15bee9af13c)

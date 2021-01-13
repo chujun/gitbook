@@ -49,6 +49,7 @@
 	* [自动生成大数据表](数据库/自动生成大数据表/README.md)
 		* [mysql快速生成大数据量表.md](数据库/自动生成大数据表/mysql快速生成大数据量表.md)
 	* [书籍-mysql技术内幕-Innodb存储引擎](数据库/书籍-mysql技术内幕-Innodb存储引擎/README.md)
+		* [attach2常用配置参数说明.md](数据库/书籍-mysql技术内幕-Innodb存储引擎/attach2常用配置参数说明.md)
 		* [attach1showEngineInnodbStatus输出内容.md](数据库/书籍-mysql技术内幕-Innodb存储引擎/attach1showEngineInnodbStatus输出内容.md)
 		* [1MySQL体系结构和存储引擎.md](数据库/书籍-mysql技术内幕-Innodb存储引擎/1MySQL体系结构和存储引擎.md)
 		* [2InnoDB存储引擎.md](数据库/书籍-mysql技术内幕-Innodb存储引擎/2InnoDB存储引擎.md)
