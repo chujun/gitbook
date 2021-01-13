@@ -323,6 +323,7 @@ select table_name,space,page_number,page_type from innodb_buffer_page_lru where 
 | <null>            | 0     | 32769       | IBUF_BITMAP       |
 | `SYS_INDEXES`     | 0     | 514         | INDEX             |
 ```
+table_name为null表示该页属于系统表空间
 
 在innodb_buffer_page_lru中观察unzip_LRU列表中的页
 正常LRU列表中的compressed_size值为0
@@ -333,6 +334,8 @@ where compressed_size <>0;
 ```
 2innodb_buffer_page_lru观察unzip_LRU列表截图
 ![2innodb_buffer_page_lru观察unzip_LRU列表](img/two/2innodb_buffer_page_lru观察unzip_LRU列表.png)
+
+#### Flush list
 
 ### 3重做日志缓冲(redo log buffer)
 innodb将重做日志先放到这个缓冲区，然后按一定频率将其刷新到重做日志文件。
@@ -409,7 +412,77 @@ Last checkpoint at  2991952365634
 125605471 log i/o's done, 35.60 log i/o's/second
 ----------------------
 ```
+## checkpoint类型(按照是否全量刷洗脏页区分)
+### Sharp checkpoint
+将所有脏页都刷新回磁盘，
+发生时机：数据库关闭时，默认的工作方式，*innodb_fast_shutdown*=1
 
+### Fuzzy checkpoint 
+只刷新部分脏页回磁盘
+#### 发生时机
+* Master Thread Checkpoint
+* Flush_LRU_List checkpoint
+* Async/Sync Flush checkpoint
+* Dirty Page too much checkpoint
+
+说明
+master thread(2.5节会详细描述)中发生的checkpoint，差不多以每秒或每十秒
+的速度从缓冲池的脏页列表中刷新一定比例的页回磁盘。
+这个过程是异步的，即此时innodb存储引擎可以进行其他的操作，用户查询线程不会阻塞。
+
+FLUSH_LRU_LIST Checkpoint
+innodb存储引擎需要保证LRU列表中需要有差不多100个空闲页可供使用。
+
+倘若没有足够多的可用空闲页，那么innodb存储引擎会将LRU列表尾端的页移除。
+如果这些页中有脏页，那么需要进行checkpoint，而这些页时来自LRU列表的。
+
+在Page Cleaner线程中进行
+*innodb_lru_scan_depth*控制LRU列表中可用页的数量,默认为1024
+
+Async/Sync Flush Checkpoint 
+指的是重做文件不可用的情况
+这时需要强制将一个页刷新回磁盘，而此时脏页是从脏页列表中选取的。
+
+梳理公式
+假设将已经写入到重做日志的LSN记为redo_lsn(这儿假设的，不一定是源码里的)
+将已经刷新回磁盘最新页的LSN记为checkpoint_lsn，则可以定义如下
+
+```
+checkpoint_age=redo_lsn - checkpoint_lsn
+再定义一下变量
+async_water_mark = 75% * total_redo_log_file_size
+sync_water_mark = 90% * total_redo_log_file_size
+```
+若每个重做日志文件大小1GB，并且定义了两个重做日志文件，一个重做文件组，则
+重做日志文件总大小为2GB，那么
+async_water_mark=1.5GB,sync_water_mark=1.8GB.
+
+* 当checkpoint_age<async_water_mark时，不需要刷新任何脏页到磁盘
+* 当async_water_mark<checkpoint_age<sync_water_mark时触发
+  Async Flush，从Flush列表中刷新足够的脏页回磁盘，使得刷新后满足checkpoint_age<async_water_mark
+* checkpoint_age>sync_water_mark这种情况一般很少发生，除非设置的重做日志文件太小,并且在进行类似LOAD DATA的bulk insert操作。
+  此时触发Sync Flush操作，从Flush列表中刷新足够的脏页回磁盘，使得刷新后满足checkpoint_age<async_water_mark
+
+在单独的Page Clearner Thread中进行，不会阻塞用户查询线程了(老版本会阻塞)
+
+![](img/two/2Async:SyncFlushCheckpoint观察.png)
+
+Dirty Page too mach checkpoint
+脏页数量太多，导致innodb强制进行checkpoint。
+目的为了保证缓冲池中有足够可用的页
+*innodb_max_dirty_pages_pct*控制，默认值为75%
+当缓冲池中脏页数量占据75%时，强制进行checkpoint，刷新一部分的脏页到磁盘。
+```
+trade_in_center> show variables like 'innodb_max_dirty_pages_pct';
+Reconnecting...
++----------------------------+-----------+
+| Variable_name              | Value     |
++----------------------------+-----------+
+| innodb_max_dirty_pages_pct | 75.000000 |
++----------------------------+-----------+
+1 row in set
+Time: 0.029s
+```
 
 # 资料
 ## 网页
