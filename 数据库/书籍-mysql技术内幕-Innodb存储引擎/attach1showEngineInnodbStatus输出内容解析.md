@@ -47,7 +47,7 @@ Pages flushed up to 143942609---(3)
 //字节，脏页的数量(日志字节数来衡量)，2-3=脏页的数量(日志字节为单位)
 
 Last checkpoint at  143942600---(4)
-//字节，共享表空间上的日志记录点，最后一次检查点，及崩溃恢复时指定的起点，3-4就是崩溃恢复多跑的日志，值越大说明需要提升checkpoint的跟进速度
+//字节，共享表空间上BACKGROUND THREAD的日志记录点，最后一次检查点，及崩溃恢复时指定的起点，3-4就是崩溃恢复多跑的日志，值越大说明需要提升checkpoint的跟进速度
 
 ![attach1LSN逻辑图](img/attach1/attach1LSN逻辑图.png)
 
@@ -55,7 +55,18 @@ LSN日志分析 对各个字段的含义整体梳理分析
 ![LSN日志分析](img/important/2LSN日志分析图重要系列.png)
 ![2LSN日志分析加字版图重要系列](img/important/2LSN日志分析加字版图重要系列.png)
 
+# BACKGROUND THREAD部分
 
+-----------------
+BACKGROUND THREAD
+-----------------
+srv_master_thread loops: 2710875 srv_active, 0 srv_shutdown, 106 srv_idle
+srv_master_thread log flush and writes: 2710981
+----------
+
+
+![](img/attach1/attach1backgroundthread1.png)
+![](img/attach1/attach1backgroundthread2.png)
 
 # 资料
 ![](https://app.yinxiang.com/shard/s23/nl/6983422/dc34034c-34c9-4b75-a89f-c15bee9af13c)

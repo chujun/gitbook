@@ -24,6 +24,11 @@ mysql最大架构特点：插件式存储引擎
 * 2.一个脏页中有好几个事务提交的变更数据，怎么区分出来当前checkpoint到哪一个事务了呢
 * 3.checkpoint刷新脏页到磁盘是把所有数据变更都刷新到磁盘嘛?
 
+* 4.mysql master线程数量，mysql支持并发请求嘛
+* 5.innodb是怎么处理事务回滚的数据的
+
+* 6.mvcc怎么实现机制，怎么处理insert，update，delete，怎么保证一致性读的
+
 # 资料
 ## 书籍
 * 1.MySQl技术内幕:Innodb存储引擎(第二版) 微信阅读
