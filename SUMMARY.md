@@ -35,6 +35,11 @@
 * [mybatis学习](mybatis学习/README.md)
 	* [源码学习](mybatis学习/源码学习/README.md)
 		* [环境准备.md](mybatis学习/源码学习/环境准备.md)
+	* [通用源码阅读指导书之mybatis源码详解](mybatis学习/通用源码阅读指导书之mybatis源码详解/README.md)
+		* [4MyBatis源码结构概述.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/4MyBatis源码结构概述.md)
+		* [2Mybatis概述.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/2Mybatis概述.md)
+		* [1源码阅读.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/1源码阅读.md)
+		* [3MyBatis运行初探.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/3MyBatis运行初探.md)
 ---
 * [系统性能优化](系统性能优化/README.md)
 	* [极客时间-系统性能优化必知必会课程](系统性能优化/极客时间-系统性能优化必知必会课程/README.md)
