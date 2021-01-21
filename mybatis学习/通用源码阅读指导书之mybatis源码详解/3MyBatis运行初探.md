@@ -248,7 +248,7 @@ public class MapperProxyFactory<T> {
 ```
 List<User> userList =  userMapper.queryUserBySchoolName(userParam);
 ```
-主要就是看这个动态代理对象干了什么活呢?
+主要就是看这个动态代理对象*MapperProxy*干了什么活呢?
 查看*MapperProxy*的invoke核心方法
 ```java
 public class MapperProxy<T> implements InvocationHandler, Serializable {
@@ -256,8 +256,10 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     try {
       if (Object.class.equals(method.getDeclaringClass())) {
+          //例如调用Object类的hashCode,toString等方法
         return method.invoke(this, args);
       } else if (method.isDefault()) {
+          //调用default方法
         return invokeDefaultMethod(proxy, method, args);
       }
     } catch (Throwable t) {
@@ -269,10 +271,249 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 }
 ```
 
+触发*MapperMethod*对象的execute方法，核心方法如下
+```java
+public class MapperMethod {
+  public Object execute(SqlSession sqlSession, Object[] args) {
+    Object result;
+    switch (command.getType()) {
+      case INSERT: {
+        Object param = method.convertArgsToSqlCommandParam(args);
+        result = rowCountResult(sqlSession.insert(command.getName(), param));
+        break;
+      }
+      case UPDATE: {
+        Object param = method.convertArgsToSqlCommandParam(args);
+        result = rowCountResult(sqlSession.update(command.getName(), param));
+        break;
+      }
+      case DELETE: {
+        Object param = method.convertArgsToSqlCommandParam(args);
+        result = rowCountResult(sqlSession.delete(command.getName(), param));
+        break;
+      }
+      case SELECT:
+        if (method.returnsVoid() && method.hasResultHandler()) {
+          executeWithResultHandler(sqlSession, args);
+          result = null;
+        } else if (method.returnsMany()) {
+          result = executeForMany(sqlSession, args);
+        } else if (method.returnsMap()) {
+          result = executeForMap(sqlSession, args);
+        } else if (method.returnsCursor()) {
+          result = executeForCursor(sqlSession, args);
+        } else {
+          Object param = method.convertArgsToSqlCommandParam(args);
+          result = sqlSession.selectOne(command.getName(), param);
+          if (method.returnsOptional()
+                  && (result == null || !method.getReturnType().equals(result.getClass()))) {
+            result = Optional.ofNullable(result);
+          }
+        }
+        break;
+      case FLUSH:
+        result = sqlSession.flushStatements();
+        break;
+      default:
+        throw new BindingException("Unknown execution method for: " + command.getName());
+    }
+    if (result == null && method.getReturnType().isPrimitive() && !method.returnsVoid()) {
+      throw new BindingException("Mapper method '" + command.getName()
+              + " attempted to return null from a method with a primitive return type (" + method.getReturnType() + ").");
+    }
+    return result;
+  }
 
+  private <E> Object executeForMany(SqlSession sqlSession, Object[] args) {
+    List<E> result;
+    Object param = method.convertArgsToSqlCommandParam(args);
+    if (method.hasRowBounds()) {
+      RowBounds rowBounds = method.extractRowBounds(args);
+      result = sqlSession.selectList(command.getName(), param, rowBounds);
+    } else {
+      result = sqlSession.selectList(command.getName(), param);
+    }
+    // issue #510 Collections & arrays support
+    if (!method.getReturnType().isAssignableFrom(result.getClass())) {
+      if (method.getReturnType().isArray()) {
+        return convertToArray(result);
+      } else {
+        return convertToDeclaredCollection(sqlSession.getConfiguration(), result);
+      }
+    }
+    return result;
+  }
+}
+```
+会触发executeForMany方法
+追踪到这里，mybatis已经完成了为映射接口注入实现的过程。
+对映射接口中抽象方法的调用转变成为了对SqlSession的数据库查询操作selectList
 
 ## 3.2.4SQL语句的查找
+数据库查询操作调用到了DefaultSqlSession的select方法
+```java
+public class DefaultSqlSession implements SqlSession {
+  @Override
+  public <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds) {
+    try {
+      MappedStatement ms = configuration.getMappedStatement(statement);
+      return executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
+    } catch (Exception e) {
+      throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);
+    } finally {
+      ErrorContext.instance().reset();
+    }
+  }
+}
+```
+MappedStatement对象对应了我们设置的一个数据库操作节点，主要定义了数据库操作语句、输入/输出参数等信息
+
 ## 3.2.5查询结果缓存
+使用*Executor*的query方法执行sql语句,该接口有两个子类
+*BaseExecutor*和*CachingExecutor*类.
+当前流程实际执行的是CachingExecutor方法
+```java
+public class CachingExecutor implements Executor {
+  @Override
+  public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
+    BoundSql boundSql = ms.getBoundSql(parameterObject);
+    CacheKey key = createCacheKey(ms, parameterObject, rowBounds, boundSql);
+    return query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+  }
+}
+```
+需要注意的是*BoundSql*类是经过层层转化后去除掉if,where等标签的SQL语句，
+而*CacheKey*是为该次查询操作计算出来的缓存键.
+这两个类如何生成，暂时先不考虑，后续再研究，先走主流程
+走到CachingExecutor的另一个query方法
+```java
+public class CachingExecutor implements Executor {
+  @Override
+  public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql)
+          throws SQLException {
+    Cache cache = ms.getCache();
+    if (cache != null) {
+      flushCacheIfRequired(ms);
+      if (ms.isUseCache() && resultHandler == null) {
+        ensureNoOutParams(ms, boundSql);
+        @SuppressWarnings("unchecked")
+        List<E> list = (List<E>) tcm.getObject(cache, key);
+        if (list == null) {
+          list = delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+          tcm.putObject(cache, key, list); // issue #578 and #116
+        }
+        return list;
+      }
+    }
+    return delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+  }
+}
+```
+查看当前查询操作是否命中缓存，如果是，则从缓存中获取数据结果，否则，便通过delegate调用query方法。
 ## 3.2.6数据库查询
+delegate调用的query方法再次调用Executor接口中的query方法，
+这次实际调用的是BaseExecutor的query方法
+```java
+public class CachingExecutor implements Executor {
+    @Override
+    public <E> List<E> query(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql) throws SQLException {
+        ErrorContext.instance().resource(ms.getResource()).activity("executing a query").object(ms.getId());
+        if (closed) {
+            throw new ExecutorException("Executor was closed.");
+        }
+        if (queryStack == 0 && ms.isFlushCacheRequired()) {
+            clearLocalCache();
+        }
+        List<E> list;
+        try {
+            queryStack++;
+            list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
+            if (list != null) {
+                handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
+            } else {
+                list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
+            }
+        } finally {
+            queryStack--;
+        }
+        if (queryStack == 0) {
+            for (DeferredLoad deferredLoad : deferredLoads) {
+                deferredLoad.load();
+            }
+            // issue #601
+            deferredLoads.clear();
+            if (configuration.getLocalCacheScope() == LocalCacheScope.STATEMENT) {
+                // issue #482
+                clearLocalCache();
+            }
+        }
+        return list;
+    }
+}
+```
+该query方法比较杂，相对比较复杂，其中的关键操作是queryFromDatabase方法
+```
+list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
+```
+```java
+public abstract class BaseExecutor implements Executor {
+  private <E> List<E> queryFromDatabase(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql) throws SQLException {
+    List<E> list;
+    localCache.putObject(key, EXECUTION_PLACEHOLDER);
+    try {
+      list = doQuery(ms, parameter, rowBounds, resultHandler, boundSql);
+    } finally {
+      localCache.removeObject(key);
+    }
+    localCache.putObject(key, list);
+    if (ms.getStatementType() == StatementType.CALLABLE) {
+      localOutputParameterCache.putObject(key, parameter);
+    }
+    return list;
+  }
+}
+```
+进一步看doQuery方法，实际执行的是SimpleExecutor的doQuery方法
+```java
+public class SimpleExecutor extends BaseExecutor {
+  @Override
+  public <E> List<E> doQuery(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+    Statement stmt = null;
+    try {
+      Configuration configuration = ms.getConfiguration();
+      StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
+      stmt = prepareStatement(handler, ms.getStatementLog());
+      return handler.query(stmt, resultHandler);
+    } finally {
+      closeStatement(stmt);
+    }
+  }
+}
+```
+生成java.sql包中Statement类，调用StatementHandler的query方法
+经过RoutingStatementHandler里的delegate属性，
+最终执行PreparedStatementHandler类的query方法
+```java
+public class PreparedStatementHandler extends BaseStatementHandler {
+  @Override
+  public <E> List<E> query(Statement statement, ResultHandler resultHandler) throws SQLException {
+    PreparedStatement ps = (PreparedStatement) statement;
+    ps.execute();
+    return resultSetHandler.handleResultSets(ps);
+  }
+}
+```
+`ps.execute();`java.sql包中的PreparedStatement类执行了真正的SQL语句，
+然后把执行结果交给*ResultHandler*对象处理
+查询数据库结果存放在PreparedStatement对象里，层次较深,h>statement>result
+![3PreparedStatement存放数据记录debug信息](img/three/3PreparedStatement存放数据记录debug信息.png)
+
+这一步过程比较复杂,主要步骤如下
+* 在进行数据库查询前，先查询缓存；如果确实需要查询数据库，则数据库查询之后的结果也放入缓存中
+* SQL语句执行经过层层转化，依次经过MappedStatement对象，Statement对象和PreparedStatement对象，最后才得以真正执行
+* 最终数据库查询得到的结果交给ResultHandler对象处理
+
 ## 3.2.7处理结果集
+TODO:cj to be done
 ## 3.2.8总结
+TODO:cj 待梳理uml时序图
