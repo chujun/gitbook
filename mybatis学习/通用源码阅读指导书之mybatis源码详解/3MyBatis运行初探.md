@@ -514,6 +514,120 @@ public class PreparedStatementHandler extends BaseStatementHandler {
 * 最终数据库查询得到的结果交给ResultHandler对象处理
 
 ## 3.2.7处理结果集
-TODO:cj to be done
+最终执行的方法是DefaultResultSetHandler类的handleResultSets方法
+```java
+public class DefaultResultSetHandler implements ResultSetHandler {
+  @Override
+  public List<Object> handleResultSets(Statement stmt) throws SQLException {
+    ErrorContext.instance().activity("handling results").object(mappedStatement.getId());
+
+    final List<Object> multipleResults = new ArrayList<>();
+
+    int resultSetCount = 0;
+    ResultSetWrapper rsw = getFirstResultSet(stmt);
+
+    List<ResultMap> resultMaps = mappedStatement.getResultMaps();
+    int resultMapCount = resultMaps.size();
+    validateResultMapsCount(rsw, resultMapCount);
+    while (rsw != null && resultMapCount > resultSetCount) {
+      ResultMap resultMap = resultMaps.get(resultSetCount);
+      handleResultSet(rsw, resultMap, multipleResults, null);
+      rsw = getNextResultSet(stmt);
+      cleanUpAfterHandlingResultSet();
+      resultSetCount++;
+    }
+
+    String[] resultSets = mappedStatement.getResultSets();
+    if (resultSets != null) {
+      while (rsw != null && resultSetCount < resultSets.length) {
+        ResultMapping parentMapping = nextResultMaps.get(resultSets[resultSetCount]);
+        if (parentMapping != null) {
+          String nestedResultMapId = parentMapping.getNestedResultMapId();
+          ResultMap resultMap = configuration.getResultMap(nestedResultMapId);
+          handleResultSet(rsw, resultMap, null, parentMapping);
+        }
+        rsw = getNextResultSet(stmt);
+        cleanUpAfterHandlingResultSet();
+        resultSetCount++;
+      }
+    }
+
+    return collapseSingleResultList(multipleResults);
+  }
+}
+```
+查询出来的结果被遍历后放入到列表multipleResults中并返回
+
+问题之mybatis如何将数据库输出的记录转化为对象列表???
+![3mybaits将数据库记录转化为对象列表调用链路](img/three/3mybaits将数据库记录转化为对象列表调用链路.png)
+
+重点关注最后三个方法
+* createResultObject 创建输出结果对象，本示例中为User对象
+* applyAutomaticMapping 在自动属性映射功能开始的情况下，该方法将数据记录的赋值给输出结果对象
+* applyPropertyMapping 该方法按照用户映射设置，给输出结果对象的属性赋值
+
+createResultObject源码
+```java
+public class DefaultResultSetHandler implements ResultSetHandler {
+  private Object createResultObject(ResultSetWrapper rsw, ResultMap resultMap, ResultLoaderMap lazyLoader, String columnPrefix) throws SQLException {
+    this.useConstructorMappings = false; // reset previous mapping result
+    final List<Class<?>> constructorArgTypes = new ArrayList<>();
+    final List<Object> constructorArgs = new ArrayList<>();
+    Object resultObject = createResultObject(rsw, resultMap, constructorArgTypes, constructorArgs, columnPrefix);
+    if (resultObject != null && !hasTypeHandlerForResultObject(rsw, resultMap.getType())) {
+      final List<ResultMapping> propertyMappings = resultMap.getPropertyResultMappings();
+      for (ResultMapping propertyMapping : propertyMappings) {
+        // issue gcode #109 && issue #149
+        if (propertyMapping.getNestedQueryId() != null && propertyMapping.isLazy()) {
+          resultObject = configuration.getProxyFactory().createProxy(resultObject, lazyLoader, configuration, objectFactory, constructorArgTypes, constructorArgs);
+          break;
+        }
+      }
+    }
+    this.useConstructorMappings = resultObject != null && !constructorArgTypes.isEmpty(); // set current mapping result
+    return resultObject;
+  }
+}
+```
+applyAutomaticMapping核心源码
+```java
+public class DefaultResultSetHandler implements ResultSetHandler {
+  private boolean applyAutomaticMappings(ResultSetWrapper rsw, ResultMap resultMap, MetaObject metaObject, String columnPrefix) throws SQLException {
+    List<UnMappedColumnAutoMapping> autoMapping = createAutomaticMappings(rsw, resultMap, metaObject, columnPrefix);
+    boolean foundValues = false;
+    if (!autoMapping.isEmpty()) {
+      for (UnMappedColumnAutoMapping mapping : autoMapping) {
+        final Object value = mapping.typeHandler.getResult(rsw.getResultSet(), mapping.column);
+        if (value != null) {
+          foundValues = true;
+        }
+        if (value != null || (configuration.isCallSettersOnNulls() && !mapping.primitive)) {
+          // gcode issue #377, call setter on nulls (value is not 'found')
+          metaObject.setValue(mapping.property, value);
+        }
+      }
+    }
+    return foundValues;
+  }
+}
+```
+基本思路就是训话遍历每个属性，然后调用metaObject.setValue(mapping.property,value)语句为属性赋值
+
 ## 3.2.8总结
 TODO:cj 待梳理uml时序图
+
+在这个数据库操作阶段，mybatis完成的工作可以概述如下
+
+* 建立连接数据库的SqlSession
+* 查找当前映射接口中抽象方法对应的数据库操作节点，根据该节点生成接口的实现
+* 接口的动态代理实现拦截对映射接口抽象方法的调用，并将其转化为数据查询操作
+* 对数据库操作节点中的数据库操作语句进行多次处理，最终得到标准的SQL语句
+* 尝试从缓冲中查找操作结果，如果找到则返回；如果找不到则继续从数据库中查询
+* 从数据库中查询结果
+* 处理结果集
+* 建立输出对象
+* 根据输出结果对输出对象的属性赋值
+* 在缓冲中记录查询结果
+* 返回查询结果
+
+不懂的没关系，后面再详细阅读源代码
