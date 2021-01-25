@@ -39,6 +39,7 @@
 		* [4MyBatis源码结构概述.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/4MyBatis源码结构概述.md)
 		* [2Mybatis概述.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/2Mybatis概述.md)
 		* [1源码阅读.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/1源码阅读.md)
+		* [5exception包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/5exception包.md)
 		* [3MyBatis运行初探.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/3MyBatis运行初探.md)
 ---
 * [系统性能优化](系统性能优化/README.md)
