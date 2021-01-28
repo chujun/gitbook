@@ -128,7 +128,32 @@ TypeParameterResolver主要有三个方法
 上述这三个方法都是将要解析的变量从属性、方法返回值、方法输入参数中找出来。
 变量的泛型解析才是最核心的工作
 
-还是看不懂，没关系，直接看mybatis里面的源码
+以resolveParamTypes方法为例，该方法将变量从方法输入参数中找出后，对每个变量都调用了
+resolveType 方法,resolveType是最重要的方法
+```
+/**
+     * 解析方法输入参数
+     *
+     * @param method  目标方法
+     * @param srcType 目标方法所属的类，可能是子类，也可能是父类
+     * @return 解析结果
+     */
+    public static Type[] resolveParamTypes(Method method, Type srcType) {
+        //取出方法的所有输入参数
+        Type[] paramTypes = method.getGenericParameterTypes();
+        //定义目标方法的类或接口
+        Class<?> declaringClass = method.getDeclaringClass();
+        //解析结果
+        Type[] result = new Type[paramTypes.length];
+        for (int i = 0; i < paramTypes.length; i++) {
+            //对每个输入参数一次调用resolveType方法
+            result[i] = resolveType(paramTypes[i], srcType, declaringClass);
+        }
+        return result;
+    }
+```
+
+如果还是看不懂，没关系，直接看mybatis里面的源码
 
 
 # 资料
