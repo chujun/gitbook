@@ -53,11 +53,90 @@ PropertyCopier属性复制器，可以方便的将一个对象的属性复制到
 使用装饰器模式对各种类型的对象(包括基本Bean对象，集合对象，Map对象)进行进一步的封装,为其增加一些功能，使他们更便于使用。
 ![6-7wrapper子包类图](img/six/6-7wrapper子包类图.png)
 
+*ObjectWrapper*对象包装器接口,对外部隐藏，主要通过MetaObject对外提供各种能力
+
 ObjectWrapperFactory是对象包装器工厂的接口，
 DefaultObjectWrapperFactory是它的默认实现。不过该默认实现中并没有实现任何功能，
 mybatis允许用户通过配置文件中的objectWrapperFactory节点注入新的ObjectWrapperFactory
 
-TODO:cj to be done 
+
+研究ObjectWrapper源码，先看看*MetaObject*和*MetaClass*类
+MetaObject类包含了对应类中的全部信息，并经过变化和拆解得到了一些更为细节的信息，"元对象"
+MetaClass就是包含了类型Class中更多细节信息和功能的类,"元类"（对Reflector的进一步封装）
+
+```java
+/**
+ * 对象包装器接口
+ * @author Clinton Begin
+ */
+public interface ObjectWrapper {
+  /**
+   * 获得被包装对象某个属性的值
+   */
+  Object get(PropertyTokenizer prop);
+
+  /**
+   * 设置被包装对象某个属性的值
+   */
+  void set(PropertyTokenizer prop, Object value);
+
+  /**
+   * 找到对应的属性名称
+   */
+  String findProperty(String name, boolean useCamelCaseMapping);
+
+  /**
+   * 获得所有属性get方法名称
+   */
+  String[] getGetterNames();
+
+  /**
+   * 获得所有属性set方法名称
+   */
+  String[] getSetterNames();
+
+  /**
+   * 获得指定属性set方法类型
+   */
+  Class<?> getSetterType(String name);
+
+  /**
+   * 获得指定属性get方法类型
+   */
+  Class<?> getGetterType(String name);
+
+  /**
+   * 判断某个属性是否有对应的set方法
+   */
+  boolean hasSetter(String name);
+
+  /**
+   * 判断某个属性是否有对应的get方法 
+   */
+  boolean hasGetter(String name);
+
+  /**
+   * 实例化某个属性的值
+   */
+  MetaObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory);
+
+  /**
+   * 判断被包装对象是否是集合
+   */
+  boolean isCollection();
+
+  /**
+   * 被包装对象添加集合元素 
+   */
+  void add(Object element);
+
+  /**
+   * 被包装对象添加多个集合元素
+   */
+  <E> void addAll(List<E> element);
+
+}
+```
 # 6.6反射核心类Reflect
 *Reflector*负责对一个类进行反射解析，并将解析后的结果在属性中存储起来(减少重复反射解析的消耗成本)
 reflect包中的其他类多是在其反射结果的基础上进一步包装的，使整个反射功能更易用。
@@ -69,6 +148,48 @@ reflect包中的其他类多是在其反射结果的基础上进一步包装的�
 
 
 # 6.7反射包装类
+wrapper子包里面中有很多包装类，装饰器模式，
+都依赖MataClass和MatObject
+SystemMetaObject都限定了一些默认值
+
+MataObject有两个核心方法,获取对象指定属性的值getValue，和设置对象指定属性的值setValue
+```
+public Object getValue(String name) {
+    PropertyTokenizer prop = new PropertyTokenizer(name);
+    if (prop.hasNext()) {
+      MetaObject metaValue = metaObjectForProperty(prop.getIndexedName());
+      if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+        return null;
+      } else {
+        return metaValue.getValue(prop.getChildren());
+      }
+    } else {
+      return objectWrapper.get(prop);
+    }
+  }
+
+  public void setValue(String name, Object value) {
+    PropertyTokenizer prop = new PropertyTokenizer(name);
+    if (prop.hasNext()) {
+      MetaObject metaValue = metaObjectForProperty(prop.getIndexedName());
+      if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+        if (value == null) {
+          // don't instantiate child path if value is null
+          return;
+        } else {
+          metaValue = objectWrapper.instantiatePropertyValue(name, prop, objectFactory);
+        }
+      }
+      metaValue.setValue(prop.getChildren(), value);
+    } else {
+      objectWrapper.set(prop, value);
+    }
+  }
+```
+两个方法单元自测
+![](img/six/6MetaObject%20getValue调用方法单元自测.png)
+![](img/six/6MetaObject%20setValue方法单元自测调用方.png)
+
 
 # 6.8异常拆包工具
 ExceptionUtil
@@ -151,8 +272,31 @@ resolveType 方法,resolveType是最重要的方法
         }
         return result;
     }
+    
+    /**
+   * 解析变量的实际类型
+   *
+   * @param type           变量的类型
+   * @param srcType        变量所属的类
+   * @param declaringClass 定义变量的类
+   * @return 解析结果
+   */
+  private static Type resolveType(Type type, Type srcType, Class<?> declaringClass) {
+    if (type instanceof TypeVariable) {
+      //如果是类型变量，如Map<K,V>中的K,V就是类型变量
+      return resolveTypeVar((TypeVariable<?>) type, srcType, declaringClass);
+    } else if (type instanceof ParameterizedType) {
+      //如果是参数化类型,如"Collection<String>"就是参数化类型
+      return resolveParameterizedType((ParameterizedType) type, srcType, declaringClass);
+    } else if (type instanceof GenericArrayType) {
+      //如果是包含ParameterizedType或者TypeVariable元素的列表
+      return resolveGenericArrayType((GenericArrayType) type, srcType, declaringClass);
+    } else {
+      return type;
+    }
+  }
 ```
-
+TODO:cj 有两个方法还没有看太懂*scanSuperTypes*,*translateParentTypeVars*，后续再瞅瞅
 如果还是看不懂，没关系，直接看mybatis里面的源码
 
 
