@@ -194,7 +194,58 @@ public Object getValue(String name) {
 # 6.8异常拆包工具
 ExceptionUtil
 
+剥离出jdk反射异常类调用错误，获取原始错误
+这里提供了一种处理问题的思路，绕过反射类抛出的异常，获取更深层次的异常
+
+```java
+public class ExceptionUtil {
+
+  private ExceptionUtil() {
+    // Prevent Instantiation
+  }
+
+  /**
+   * 剥离出jdk反射异常类调用错误，获取原始错误
+   * 这里提供了一种处理问题的思路，绕过反射类抛出的异常，获取更深层次的异常
+   */
+  public static Throwable unwrapThrowable(Throwable wrapped) {
+    Throwable unwrapped = wrapped;
+    while (true) {
+      if (unwrapped instanceof InvocationTargetException) {
+        unwrapped = ((InvocationTargetException) unwrapped).getTargetException();
+      } else if (unwrapped instanceof UndeclaredThrowableException) {
+        unwrapped = ((UndeclaredThrowableException) unwrapped).getUndeclaredThrowable();
+      } else {
+        return unwrapped;
+      }
+    }
+  }
+
+}
+```
+
 # 6.9参数名解析器
+*ParamNameResolver*是一个参数名解析器
+
+如果看不太懂
+调试追踪法入口--->SubstitutionInAnnotsTest#testSubstitutionWithAnnotsParamAnnot
+
+参考@Param功能的描述
+```xml
+<tr>
+    <td>
+        <code>@Param</code>
+    </td>
+    <td>
+        <code>参数</code>
+    </td>
+    <td>N/A</td>
+    <td>如果你的映射方法的形参有多个，这个注解使用在映射方法的参数上就能为它们取自定义名字。若不给出自定义名字，多参数（不包括 <code>RowBounds</code> 参数）则先以 "param"
+        作前缀，再加上它们的参数位置作为参数别名。例如 <code>#{param1}</code>, <code>#{param2}</code>，这个是默认值。如果注解是 <code>
+            @Param("person")</code>，那么参数就会被命名为 <code>#{person}</code>。
+    </td>
+</tr>
+```
 
 # 6.10泛型解析器
 *TypeParameterResolver*是泛型参数解析器，帮助mybatis推断出
