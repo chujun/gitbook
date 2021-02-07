@@ -41,6 +41,7 @@
 		* [2Mybatis概述.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/2Mybatis概述.md)
 		* [1源码阅读.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/1源码阅读.md)
 		* [22executor包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/22executor包.md)
+		* [8type包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/8type包.md)
 		* [7annotations包和lang包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/7annotations包和lang包.md)
 		* [5exception包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/5exception包.md)
 		* [3MyBatis运行初探.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/3MyBatis运行初探.md)
