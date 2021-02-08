@@ -5,7 +5,7 @@ type类有55个之多，比较繁杂，此时一定要注意归类总结
 TypeHandler：类型处理器接口
 BaseTypeHandler:类型处理器的基础实现
 TypeReference：类型参考器
--*TypeHandler:43个类型处理器
+-*TypeHandler:43个类型处理器(里面ArrayTypeHandler和UnknownTypeHandler比较特别一点)
 
 类型注册表：3个
 -SimpleTypeRegistry：基本类型注册表，内部用set维护了所有java基本类型集合
@@ -62,6 +62,7 @@ public interface TypeHandler<T> {
 * 自定义Java类型处理器，只要继承该类即可
 
 40多个类型TypeHandler处理器中最特别的是*UnknownTypeHandler*
+先通过类型处理器注册表查找对应合适的类型处理器,如果未找到，则兜底为ObjectTypeHandler
 
 ## 8.2.2TypeReference类
 会有一个问题，当mybatis取到某一个TypeHandler时,却不知道它到底是用来处理哪一个Java类型的处理器?
@@ -119,5 +120,37 @@ public abstract class TypeReference<T> {
 ```
 
 # 8.3 类型注册表
+现在各种类型处理器有了，那怎么快速找到数据类型对应的类型处理器呢？
+
+这个时候就需要各种类型注册表来帮忙了
+* SimpleTypeRegistry:简单类型注册表，通过set变量维护所有java基本类型
+* TypeAliasRegistry：类型别名注册表，使用map维护类型别名和类型的对应关系。
+* TypeHandlerRegistry:最核心
+
+TypeHandlerRegistry类属性分析
+```java
+public final class TypeHandlerRegistry {
+    //JDBC类型与对应类型处理器的映射
+    private final Map<JdbcType, TypeHandler<?>> jdbcTypeHandlerMap = new EnumMap<>(JdbcType.class);
+
+    //Java类型与Map<JdbcType,TypeHandler<?>>的映射
+    private final Map<Type, Map<JdbcType, TypeHandler<?>>> typeHandlerMap = new ConcurrentHashMap<>();
+
+    //未知类型的处理器
+    private final TypeHandler<Object> unknownTypeHandler = new UnknownTypeHandler(this);
+
+    //建为typeHandler.getClass(),值为typeHandler。里面存储了所有的类型处理器
+    private final Map<Class<?>, TypeHandler<?>> allTypeHandlersMap = new HashMap<>();
+
+    //空的Map<JdbcType,TypeHandler<?>>，表示该Java类型没有对应的Map<JdbcType,TypeHandler<?>>
+    private static final Map<JdbcType, TypeHandler<?>> NULL_TYPE_HANDLER_MAP = Collections.emptyMap();
+
+    //默认的枚举类型处理器
+    private Class<? extends TypeHandler> defaultEnumTypeHandler = EnumTypeHandler.class;
+
+    
+}
+```
+
 
 # 资料
