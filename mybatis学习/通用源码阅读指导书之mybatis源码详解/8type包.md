@@ -148,7 +148,40 @@ public final class TypeHandlerRegistry {
     //默认的枚举类型处理器
     private Class<? extends TypeHandler> defaultEnumTypeHandler = EnumTypeHandler.class;
 
-    
+
+    /**
+     * 核心查找方法，找出一个类型处理器
+     * @param type Java类型
+     * @param jdbcType JDBC类型
+     * @param <T> 类型处理器的目标类型
+     * @return 类型处理器
+     */
+    @SuppressWarnings("unchecked")
+    private <T> TypeHandler<T> getTypeHandler(Type type, JdbcType jdbcType) {
+        if (ParamMap.class.equals(type)) {
+            //ParamMap，不是单一的Java类型
+            return null;
+        }
+        //先根据Java类型找到对应的jdbcHandlerMap
+        Map<JdbcType, TypeHandler<?>> jdbcHandlerMap = getJdbcHandlerMap(type);
+        TypeHandler<?> handler = null;
+        if (jdbcHandlerMap != null) {
+            //根据JDBC类型找寻对应的处理器
+            handler = jdbcHandlerMap.get(jdbcType);
+            if (handler == null) {
+                //使用null作为建进行一次找寻，通过本类源码可知当前jdbcHandlerMap可能是EnumMap，也可能是HashMap
+                //EnumMap不允许键为null，因此总返回null.HashMap允许键返回null,这并不是一次无用功
+                handler = jdbcHandlerMap.get(null);
+            }
+            if (handler == null) {
+                // #591
+                handler = pickSoleHandler(jdbcHandlerMap);
+            }
+        }
+        //返回找到的类型处理器
+        // type drives generics here
+        return (TypeHandler<T>) handler;
+    }
 }
 ```
 
