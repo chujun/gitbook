@@ -39,6 +39,7 @@
 		* [6TypeParameterResolver.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/6TypeParameterResolver.md)
 		* [4MyBatis源码结构概述.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/4MyBatis源码结构概述.md)
 		* [2Mybatis概述.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/2Mybatis概述.md)
+		* [10logging包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/10logging包.md)
 		* [1源码阅读.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/1源码阅读.md)
 		* [22executor包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/22executor包.md)
 		* [8type包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/8type包.md)
