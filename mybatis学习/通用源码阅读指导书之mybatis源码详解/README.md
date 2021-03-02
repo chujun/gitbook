@@ -57,6 +57,9 @@ ISBN:9787121391460
 [个人主页](https://yeecode.top/)
 [github主页](https://github.com/yeecode)
 
+# TODO临时梳理地方
+TODO
+客户端映射接口抽象方法调用---->MappingProxy ----> MappingMethod.execute--->
 
 # 资料
 [本书代码示例](https://github.com/yeecode/MyBatisDemo)

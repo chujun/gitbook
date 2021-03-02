@@ -46,6 +46,7 @@
 		* [11parsing包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/11parsing包.md)
 		* [8type包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/8type包.md)
 		* [7annotations包和lang包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/7annotations包和lang包.md)
+		* [13binding包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/13binding包.md)
 		* [5exception包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/5exception包.md)
 		* [3MyBatis运行初探.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/3MyBatis运行初探.md)
 		* [9io包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/9io包.md)
