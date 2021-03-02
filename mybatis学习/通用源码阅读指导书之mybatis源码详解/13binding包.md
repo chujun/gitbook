@@ -72,7 +72,11 @@ SqlCommand内部类指代一条SQL语句。
 
 
 ## 13.1.2数据库操作方法的接入
-
+```puml
+@startuml
+Bob -> Alice : hello121212
+@enduml
+```
 # 13.2抽象方法与数据库操作节点的关联
 
 # 13.3数据库操作接入总结

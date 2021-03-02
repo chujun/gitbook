@@ -13,3 +13,5 @@ _book/
 node_modules/
 package-lock.json
 package.json
+
+assets/

@@ -40,7 +40,8 @@
 
     "-lunr",
     "-search",
-    "search-pro"
+    "search-pro",
+    "uml"
   ],
   "pluginsConfig": {
     "github": {
@@ -105,6 +106,10 @@
         "120x120": "./source/images/apple-touch-icon.jpg",
         "180x180": "./source/images/apple-touch-icon.jpg"
       }
+    },
+    "uml": {
+        "format": "png",
+        "nailgun": false
     }
   }
 }
