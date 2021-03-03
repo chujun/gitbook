@@ -72,7 +72,7 @@ SqlCommand内部类指代一条SQL语句。
 
 
 ## 13.1.2数据库操作方法的接入
-```puml
+```uml
 @startuml
 Bob -> Alice : hello121212
 @enduml
