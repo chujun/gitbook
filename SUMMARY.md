@@ -19,6 +19,7 @@
 	* [gitbook结构.md](gitbook-start/gitbook结构.md)
 	* [那些问题列表.md](gitbook-start/那些问题列表.md)
 	* [gitbook搭建.md](gitbook-start/gitbook搭建.md)
+	* [插件2.md](gitbook-start/插件2.md)
 ---
 * [曾经画的那些图](曾经画的那些图/README.md)
 	* [高清设计图片集.md](曾经画的那些图/高清设计图片集.md)
@@ -36,6 +37,7 @@
 	* [源码学习](mybatis学习/源码学习/README.md)
 		* [环境准备.md](mybatis学习/源码学习/环境准备.md)
 	* [通用源码阅读指导书之mybatis源码详解](mybatis学习/通用源码阅读指导书之mybatis源码详解/README.md)
+		* [mybatis框架运行梳理.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/mybatis框架运行梳理.md)
 		* [6TypeParameterResolver.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/6TypeParameterResolver.md)
 		* [4MyBatis源码结构概述.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/4MyBatis源码结构概述.md)
 		* [2Mybatis概述.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/2Mybatis概述.md)
@@ -113,4 +115,7 @@
 		* [自动化测试需求列表.md](自动化测试框架/robotframework/自动化测试需求列表.md)
 		* [QuickStartGuide.md](自动化测试框架/robotframework/QuickStartGuide.md)
 		* [robotframework.md](自动化测试框架/robotframework/robotframework.md)
+---
+* [assets](assets/README.md)
+	* [images](assets/images/README.md)
 ---
