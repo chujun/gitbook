@@ -68,15 +68,89 @@ public static class MethodSignature {
 ```
 SqlCommand内部类指代一条SQL语句。
 
+```java
+public static class SqlCommand {
+    //SQL语句的名称
+    private final String name;
+    //SQL语句的种类
+    private final SqlCommandType type;
+
+    public SqlCommand(Configuration configuration, Class<?> mapperInterface, Method method) {
+      final String methodName = method.getName();
+      final Class<?> declaringClass = method.getDeclaringClass();
+      MappedStatement ms = resolveMappedStatement(mapperInterface, methodName, declaringClass,
+          configuration);
+      if (ms == null) {
+        if (method.getAnnotation(Flush.class) != null) {
+          name = null;
+          type = SqlCommandType.FLUSH;
+        } else {
+          throw new BindingException("Invalid bound statement (not found): "
+              + mapperInterface.getName() + "." + methodName);
+        }
+      } else {
+        name = ms.getId();
+        type = ms.getSqlCommandType();
+        if (type == SqlCommandType.UNKNOWN) {
+          throw new BindingException("Unknown execution method for: " + name);
+        }
+      }
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public SqlCommandType getType() {
+      return type;
+    }
+
+    /**
+     * 找出指定接口指定方法对应的MappedStatement类
+     * @param mapperInterface 映射接口
+     * @param methodName 映射接口中具体操作方法名
+     * @param declaringClass 操作方法所在的类。一般是映射接口本身,也可能是映射接口的父类
+     * @param configuration mybatis全局配置信息
+     * @return 对象
+     */
+    private MappedStatement resolveMappedStatement(Class<?> mapperInterface, String methodName,
+                                                   Class<?> declaringClass, Configuration configuration) {
+        //数据库操作语句的编号:"接口名.方法名"
+        String statementId = mapperInterface.getName() + "." + methodName;
+        //configuration保存了解析后的所有操作语句,去查找该语句
+        if (configuration.hasStatement(statementId)) {
+            return configuration.getMappedStatement(statementId);
+        } else if (mapperInterface.equals(declaringClass)) {
+            //递归结束，仍然没有找到匹配的结果
+            return null;
+        }
+        //从方法的定义类开始，沿着父类向上寻找。找到接口类时停止
+        for (Class<?> superInterface : mapperInterface.getInterfaces()) {
+            if (declaringClass.isAssignableFrom(superInterface)) {
+                MappedStatement ms = resolveMappedStatement(superInterface, methodName,
+                    declaringClass, configuration);
+                if (ms != null) {
+                    return ms;
+                }
+            }
+        }
+        return null;
+    }
+  }
+```
+
+
 还有一个内部类ParamMap，是HashMap的子类，但是更为严格，get方法重载了，具体看源码，当获取不存在的键值时，直接抛出异常。
 
+从MapperMethod源码中的两个基本属性可以看出MapperMethod将一个数据库操作语句和一个java方法绑定在了一起
+它的内部类MethodSignature属性保存了这个方法的详细信息；
+它的SqlCommand属性持有这个方法对应的SQL语句
+![13MapperMethod类功能示意图](img/13/13MapperMethod类功能示意图.png)
+
+只要调用了MapperMethod对象的execute方法，就可以随之触发具体的数据库操作.
 
 ## 13.1.2数据库操作方法的接入
-```uml
-@startuml
-Bob -> Alice : hello121212
-@enduml
-```
+
 # 13.2抽象方法与数据库操作节点的关联
 
 # 13.3数据库操作接入总结
