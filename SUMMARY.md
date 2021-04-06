@@ -95,12 +95,15 @@
 	* [maven](java/maven/README.md)
 		* [archetype插件.md](java/maven/archetype插件.md)
 		* [常用命令.md](java/maven/常用命令.md)
+	* [多线程](java/多线程/README.md)
+		* [CAS.md](java/多线程/CAS.md)
 	* [java那些年踩过的坑](java/java那些年踩过的坑/README.md)
 		* [double参与运算.md](java/java那些年踩过的坑/double参与运算.md)
 		* [jpa.md](java/java那些年踩过的坑/jpa.md)
 ---
 * [脚本](脚本/README.md)
 	* [常用脚本列表](脚本/常用脚本列表/README.md)
+		* [dict.py](脚本/常用脚本列表/dict.py)
 ---
 * [性能测试](性能测试/README.md)
 	* [gperftools.md](性能测试/gperftools.md)
@@ -115,6 +118,11 @@
 		* [自动化测试需求列表.md](自动化测试框架/robotframework/自动化测试需求列表.md)
 		* [QuickStartGuide.md](自动化测试框架/robotframework/QuickStartGuide.md)
 		* [robotframework.md](自动化测试框架/robotframework/robotframework.md)
+---
+* [工作](工作/README.md)
+	* [晋升](工作/晋升/README.md)
+		* [2021上半年晋升.md](工作/晋升/2021上半年晋升.md)
+		* [img.png](工作/晋升/img.png)
 ---
 * [assets](assets/README.md)
 	* [images](assets/images/README.md)
