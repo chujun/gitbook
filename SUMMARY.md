@@ -62,7 +62,6 @@
 * [工作](工作/README.md)
 	* [晋升](工作/晋升/README.md)
 		* [2021上半年晋升.md](工作/晋升/2021上半年晋升.md)
-		* [img.png](工作/晋升/img.png)
 ---
 * [开发环境](开发环境/README.md)
 	* [c](开发环境/c/README.md)
