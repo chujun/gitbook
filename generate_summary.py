@@ -33,7 +33,11 @@ def generate_dir_content(dir_name, sub_paths, level):
     if level > level_max_limit:
         return ''
     content = ''
-    for x in os.listdir(dir_name):
+    file_list = os.listdir(dir_name)
+    #文件名 按字符串排序
+    file_list.sort()
+    #print(file_list)
+    for x in file_list:
         is_dir = os.path.isdir(os.path.join(dir_name, x))
         if level == 1 and not is_dir:
             # 最顶层不输出文件
