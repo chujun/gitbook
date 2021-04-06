@@ -114,7 +114,6 @@
 ---
 * [脚本](脚本/README.md)
 	* [常用脚本列表](脚本/常用脚本列表/README.md)
-		* [dict.py](脚本/常用脚本列表/dict.py)
 ---
 * [自动化测试框架](自动化测试框架/README.md)
 	* [robotframework](自动化测试框架/robotframework/README.md)
