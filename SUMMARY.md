@@ -2,9 +2,6 @@
     
 * [介绍](README.md)
     
-* [assets](assets/README.md)
-	* [images](assets/images/README.md)
----
 * [gitbook-start](gitbook-start/README.md)
 	* [gitbook搭建.md](gitbook-start/gitbook搭建.md)
 	* [gitbook结构.md](gitbook-start/gitbook结构.md)
