@@ -2,6 +2,8 @@
     
 * [介绍](README.md)
     
+* [DDD领域驱动设计与落地](DDD领域驱动设计与落地/README.md)
+---
 * [gitbook-start](gitbook-start/README.md)
 	* [gitbook搭建.md](gitbook-start/gitbook搭建.md)
 	* [gitbook结构.md](gitbook-start/gitbook结构.md)
@@ -119,6 +121,9 @@
 		* [QuickStartGuide.md](自动化测试框架/robotframework/QuickStartGuide.md)
 		* [robotframework.md](自动化测试框架/robotframework/robotframework.md)
 		* [自动化测试需求列表.md](自动化测试框架/robotframework/自动化测试需求列表.md)
+---
+* [规划](规划/README.md)
+	* [梦想清单](规划/梦想清单/README.md)
 ---
 * [阿里云](阿里云/README.md)
 	* [sls阿里云日志](阿里云/sls阿里云日志/README.md)
