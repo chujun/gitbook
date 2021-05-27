@@ -432,6 +432,7 @@ archetype-metadata.xml位于META-INF/maven目录下
 ### 标签解析
 ### fileset
 filtered true:表示选择的文件使用Velocity模板技术,false表示选择的文件直接复制
+
 packaged true:表示选择的文件集合将被生成/复制到package属性的目录结构中
 ```xml
   <fileSets>
@@ -476,8 +477,8 @@ packaged true:表示选择的文件集合将被生成/复制到package属性的�
 # 常用命令列表
 * mvn archetype:create-from-project
 * mvn archetype:generate
-  mvn archetype:generate -Dfilter=apache:spring-boot
-  mvn archetype:generate -DarchetypeCatalog=local
+* mvn archetype:generate -Dfilter=apache:spring-boot
+* mvn archetype:generate -DarchetypeCatalog=local
 * mvn archetype:help 查看帮助文档
 
 # 不常用命令列表
