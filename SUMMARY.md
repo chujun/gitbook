@@ -78,6 +78,7 @@
 ---
 * [性能测试](性能测试/README.md)
 	* [gperftools.md](性能测试/gperftools.md)
+	* [jmeter](性能测试/jmeter/README.md)
 	* [性能测试工具](性能测试/性能测试工具/README.md)
 		* [Arthas.md](性能测试/性能测试工具/Arthas.md)
 		* [http_load.md](性能测试/性能测试工具/http_load.md)
