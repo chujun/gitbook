@@ -28,6 +28,16 @@ Apache出品，纯java开发的开源
 wget https://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-5.4.1.tgz
 ```
 
+# TODO
+* [x] jmeter是个什么东西
+* [x] 如何安装jmeter
+* [ ] 如何以gui方式和cli方式运行jmeter
+* [ ] 如何构建测试脚本
+* [ ] 如何录制测试脚本
+* [ ] 如何多线程执行测试脚本
+* [ ] 如何分析和观察测试包裹
+* [ ] 如何利用jmeter插件机制扩展功能
+
 # 链接
 [jmeter官方链接](https://jmeter.apache.org/)
 [jmeter源码](https://github.com/apache/jmeter)
