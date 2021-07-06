@@ -82,6 +82,7 @@
 		* [1jmeter getting started.md](性能测试/jmeter官网/1jmeter getting started.md)
 	* [jmeter性能测试实战(第2版)](性能测试/jmeter性能测试实战(第2版)/README.md)
 		* [1性能测试基础.md](性能测试/jmeter性能测试实战(第2版)/1性能测试基础.md)
+		* [2录制第一个测试.md](性能测试/jmeter性能测试实战(第2版)/2录制第一个测试.md)
 	* [性能测试工具](性能测试/性能测试工具/README.md)
 		* [Arthas.md](性能测试/性能测试工具/Arthas.md)
 		* [http_load.md](性能测试/性能测试工具/http_load.md)
