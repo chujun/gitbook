@@ -16,6 +16,9 @@
 	* [那些问题列表.md](gitbook-start/那些问题列表.md)
 ---
 * [java](java/README.md)
+	* [book-Java高并发核心编程.卷2，多线程、锁、JMM、JUC、高并发设计模式](java/book-Java高并发核心编程.卷2，多线程、锁、JMM、JUC、高并发设计模式/README.md)
+	* [book-java并发编程的艺术](java/book-java并发编程的艺术/README.md)
+		* [1并发编程的挑战.md](java/book-java并发编程的艺术/1并发编程的挑战.md)
 	* [java那些年踩过的坑](java/java那些年踩过的坑/README.md)
 		* [double参与运算.md](java/java那些年踩过的坑/double参与运算.md)
 		* [jpa.md](java/java那些年踩过的坑/jpa.md)
