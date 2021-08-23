@@ -138,6 +138,9 @@
 		* [robotframework.md](自动化测试框架/robotframework/robotframework.md)
 		* [自动化测试需求列表.md](自动化测试框架/robotframework/自动化测试需求列表.md)
 ---
+* [虚拟机](虚拟机/README.md)
+	* [VirtualBox](虚拟机/VirtualBox/README.md)
+---
 * [规划](规划/README.md)
 	* [梦想清单](规划/梦想清单/README.md)
 ---
