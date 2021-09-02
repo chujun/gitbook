@@ -1,6 +1,6 @@
 #
 
-#             
+#              
 
 # 应知应会
 
@@ -170,8 +170,140 @@ public class Thread {
 
 ## Thread使用@Contended注解处理ThreadLocalRandom中所需的三个字段的伪共享问题
 
-TODO:cj 经典的伪共享问题， cpu缓存冲突/失效问题
+```java
+public class Thread {
+    /** The current seed for a ThreadLocalRandom */
+    @sun.misc.Contended("tlr")
+    long threadLocalRandomSeed;
+
+    /** Probe hash value; nonzero if threadLocalRandomSeed initialized */
+    @sun.misc.Contended("tlr")
+    int threadLocalRandomProbe;
+
+    /** Secondary seed isolated from public ThreadLocalRandom sequence */
+    @sun.misc.Contended("tlr")
+    int threadLocalRandomSecondarySeed;
+}
+```
+经典的伪共享问题， cpu缓存冲突/失效问题
+需要启用参数 -XX:-RestrictContended 前后加128个byte，针对大多数cpu硬件两倍缓存行尺寸(64byte)
+
 [Java8使用@sun.misc.Contended避免伪共享](https://www.jianshu.com/p/c3c108c3dcfd)
+下面对文章中的示例做了demo
+(FalseSharing源码示例)[https://github.com/chujun/javaddu/blob/master/src/main/java/com/jun/chu/java/mulitread/FalseSharing.java]
+
+[RFR (S): JEP-142: Reduce Cache Contention on Specified Fields](http://mail.openjdk.java.net/pipermail/hotspot-dev/2012-November/007309.html)
+这篇文章里详细描述了@Contended的大致内存布局(包裹作用在类上和方法上)和@Contended分组使用的内存布局
+
+基于类的@Contended
+
+```java
+
+@Contended
+public static class ContendedTest2 {
+    private Object plainField1;
+    private Object plainField2;
+    private Object plainField3;
+    private Object plainField4;
+}
+```
+
+```
+Entire class is marked contended
+     @140 --- instance fields start ---
+     @140 "plainField1" Ljava.lang.Object;
+     @144 "plainField2" Ljava.lang.Object;
+     @148 "plainField3" Ljava.lang.Object;
+     @152 "plainField4" Ljava.lang.Object;
+     @288 --- instance fields end ---
+     @288 --- instance ends ---
+```
+
+152+4=156,156+128=284!=288????TODO:cj怎么理解
+
+基于单个字段的@Contended
+
+```java
+public static class ContendedTest1 {
+    @Contended
+    private Object contendedField1;
+    private Object plainField1;
+    private Object plainField2;
+    private Object plainField3;
+    private Object plainField4;
+}
+```
+
+```
+@ 12 --- instance fields start ---
+     @ 12 "plainField1" Ljava.lang.Object;
+     @ 16 "plainField2" Ljava.lang.Object;
+     @ 20 "plainField3" Ljava.lang.Object;
+     @ 24 "plainField4" Ljava.lang.Object;
+     @156 "contendedField1" Ljava.lang.Object; (contended, group = 0)
+     @288 --- instance fields end ---
+     @288 --- instance ends ---
+```
+24+4=28，28+128=156,
+156+4=160,160+128=288
+
+基于多个字段的@Contended
+```java
+public static class ContendedTest4 {
+        @Contended
+        private Object contendedField1;
+
+        @Contended
+        private Object contendedField2;
+
+        private Object plainField3;
+        private Object plainField4;
+    }
+```
+```
+@ 12 --- instance fields start ---
+     @ 12 "plainField3" Ljava.lang.Object;
+     @ 16 "plainField4" Ljava.lang.Object;
+     @148 "contendedField1" Ljava.lang.Object; (contended, group = 0)
+     @280 "contendedField2" Ljava.lang.Object; (contended, group = 0)
+     @416 --- instance fields end ---
+     @416 --- instance ends ---
+```
+16+4=20，20+128=148
+148+4=152，152+128=280
+280+4=284，284+128=412，412+4=416
+
+基于分组的@Contended
+```java
+public static class ContendedTest5 {
+        @Contended("updater1")
+        private Object contendedField1;
+
+        @Contended("updater1")
+        private Object contendedField2;
+
+        @Contended("updater2")
+        private Object contendedField3;
+
+        private Object plainField5;
+        private Object plainField6;
+    }
+```
+```
+@ 12 --- instance fields start ---
+     @ 12 "plainField5" Ljava.lang.Object;
+     @ 16 "plainField6" Ljava.lang.Object;
+     @148 "contendedField1" Ljava.lang.Object; (contended, group = 12)
+     @152 "contendedField2" Ljava.lang.Object; (contended, group = 12)
+     @284 "contendedField3" Ljava.lang.Object; (contended, group = 15)
+     @416 --- instance fields end ---
+     @416 --- instance ends ---
+```
+16+4=20，20+128=148，
+152+4=156，156+128=284
+284+4=288，288+128=416
+
+
 
 # 蜻蜓点水
 
