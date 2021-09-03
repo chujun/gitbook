@@ -1,6 +1,6 @@
 #
 
-#              
+#                
 
 # 应知应会
 
@@ -185,13 +185,13 @@ public class Thread {
     int threadLocalRandomSecondarySeed;
 }
 ```
-经典的伪共享问题， cpu缓存冲突/失效问题
-需要启用参数 -XX:-RestrictContended 前后加128个byte，针对大多数cpu硬件两倍缓存行尺寸(64byte)
+
+经典的伪共享问题， cpu缓存冲突/失效问题 需要启用参数 -XX:-RestrictContended 前后加128个byte，针对大多数cpu硬件两倍缓存行尺寸(64byte)
 
 [Java8使用@sun.misc.Contended避免伪共享](https://www.jianshu.com/p/c3c108c3dcfd)
 下面对文章中的示例做了demo
-(FalseSharing源码示例)[https://github.com/chujun/javaddu/blob/master/src/main/java/com/jun/chu/java/mulitread/FalseSharing.java]
-
+(
+FalseSharing源码示例)[https://github.com/chujun/javaddu/blob/master/src/main/java/com/jun/chu/java/mulitread/FalseSharing.java]
 
 [RFR (S): JEP-142: Reduce Cache Contention on Specified Fields](http://mail.openjdk.java.net/pipermail/hotspot-dev/2012-November/007309.html)
 这篇文章里详细描述了@Contended的大致内存布局(包裹作用在类上和方法上)和@Contended分组使用的内存布局
@@ -245,22 +245,24 @@ public static class ContendedTest1 {
      @288 --- instance fields end ---
      @288 --- instance ends ---
 ```
-24+4=28，28+128=156,
-156+4=160,160+128=288
+
+24+4=28，28+128=156, 156+4=160,160+128=288
 
 基于多个字段的@Contended
+
 ```java
 public static class ContendedTest4 {
-        @Contended
-        private Object contendedField1;
+    @Contended
+    private Object contendedField1;
 
-        @Contended
-        private Object contendedField2;
+    @Contended
+    private Object contendedField2;
 
-        private Object plainField3;
-        private Object plainField4;
-    }
+    private Object plainField3;
+    private Object plainField4;
+}
 ```
+
 ```
 @ 12 --- instance fields start ---
      @ 12 "plainField3" Ljava.lang.Object;
@@ -270,26 +272,27 @@ public static class ContendedTest4 {
      @416 --- instance fields end ---
      @416 --- instance ends ---
 ```
-16+4=20，20+128=148
-148+4=152，152+128=280
-280+4=284，284+128=412，412+4=416
+
+16+4=20，20+128=148 148+4=152，152+128=280 280+4=284，284+128=412，412+4=416
 
 基于分组的@Contended
+
 ```java
 public static class ContendedTest5 {
-        @Contended("updater1")
-        private Object contendedField1;
+    @Contended("updater1")
+    private Object contendedField1;
 
-        @Contended("updater1")
-        private Object contendedField2;
+    @Contended("updater1")
+    private Object contendedField2;
 
-        @Contended("updater2")
-        private Object contendedField3;
+    @Contended("updater2")
+    private Object contendedField3;
 
-        private Object plainField5;
-        private Object plainField6;
-    }
+    private Object plainField5;
+    private Object plainField6;
+}
 ```
+
 ```
 @ 12 --- instance fields start ---
      @ 12 "plainField5" Ljava.lang.Object;
@@ -300,13 +303,15 @@ public static class ContendedTest5 {
      @416 --- instance fields end ---
      @416 --- instance ends ---
 ```
-16+4=20，20+128=148，
-152+4=156，156+128=284
-284+4=288，288+128=416
+
+16+4=20，20+128=148， 152+4=156，156+128=284 284+4=288，288+128=416
 
 ### 这里面引出了另一个问题，如何计算一个java对象的内存使用情况
+
 classmexer
 [如何计算java对象内存使用情况,classmexer.jar](https://www.javamex.com/classmexer/)
+后续可扩展开来说
+[这边文章详细介绍了如何计算一个java对象的内存大小](https://www.javamex.com/tutorials/memory/object_memory_usage.shtml)
 
 # 蜻蜓点水
 
