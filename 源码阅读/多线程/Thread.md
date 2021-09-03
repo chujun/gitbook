@@ -192,6 +192,7 @@ public class Thread {
 下面对文章中的示例做了demo
 (FalseSharing源码示例)[https://github.com/chujun/javaddu/blob/master/src/main/java/com/jun/chu/java/mulitread/FalseSharing.java]
 
+
 [RFR (S): JEP-142: Reduce Cache Contention on Specified Fields](http://mail.openjdk.java.net/pipermail/hotspot-dev/2012-November/007309.html)
 这篇文章里详细描述了@Contended的大致内存布局(包裹作用在类上和方法上)和@Contended分组使用的内存布局
 
@@ -303,7 +304,9 @@ public static class ContendedTest5 {
 152+4=156，156+128=284
 284+4=288，288+128=416
 
-
+### 这里面引出了另一个问题，如何计算一个java对象的内存使用情况
+classmexer
+[如何计算java对象内存使用情况,classmexer.jar](https://www.javamex.com/classmexer/)
 
 # 蜻蜓点水
 
@@ -330,4 +333,5 @@ public class SecurityConstants {
 # 资料
 
 [Java8使用@sun.misc.Contended避免伪共享](https://www.jianshu.com/p/c3c108c3dcfd)
+[如何计算java对象内存使用情况,classmexer.jar](https://www.javamex.com/classmexer/)
 
