@@ -181,6 +181,9 @@ public class Temp {
 
 ## netty中nio使用
 
+# 小挑战
+## 自己实现个 AtomicInteger
+TODO：cj
 # 资料
 
 [Unsafe jdk8u源码](https://github.com/cj-fork-git/jdk8u/blob/master/jdk/src/share/classes/sun/misc/Unsafe.java
