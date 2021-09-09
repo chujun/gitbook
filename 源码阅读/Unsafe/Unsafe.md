@@ -123,7 +123,38 @@ public class AtomicInteger extends Number implements java.io.Serializable {
 }
 ```
 
-##  
+## 线程调度
+
+```
+//取消阻塞线程
+public native void unpark(Object thread);
+//阻塞线程
+public native void park(boolean isAbsolute, long time);
+//获得对象锁（可重入锁）
+@Deprecated
+public native void monitorEnter(Object o);
+//释放对象锁
+@Deprecated
+public native void monitorExit(Object o);
+//尝试获取对象锁
+@Deprecated
+public native boolean tryMonitorEnter(Object o);
+```
+
+### 典型应用
+
+* Java锁和同步器框架的核心类AbstractQueuedSynchronizer，就是通过调用LockSupport.park()和LockSupport.unpark()实现线程的阻塞和唤醒的，
+* 而*LockSupport*的park、unpark方法实际是调用Unsafe的park、unpark方式来实现。
+
+## Class相关
+
+## 对象操作
+
+## 数组相关
+
+## 内存屏障
+
+## 系统相关
 
 TODO:cj to be done
 
@@ -181,9 +212,82 @@ public class Temp {
 
 ## netty中nio使用
 
+# 应知应会
+
+## putOrderedObject方法为什么多了这个方法，存在的意思
+
+* putObject:指定对象指定偏移量对应的变量存储值
+* putObjectVolatile:指定对象指定偏移量对应的变量存储值，如果变量有volatile修饰，则以volatile语义存储变量
+* putOrderedObject:putObjectVolatile的延迟版本，不保证存储立马对其他线程可见性,仅对volatile字段有效
+
+前两个都好理解，主要是最后一个难以理解
+
+```java
+public class Unsafe {
+    /**
+     * Stores a reference value into a given Java variable.
+     * <p>
+     * Unless the reference <code>x</code> being stored is either null
+     * or matches the field type, the results are undefined.
+     * If the reference <code>o</code> is non-null, car marks or
+     * other store barriers for that object (if the VM requires them)
+     * are updated.
+     * @see #putInt(Object, int, int)
+     */
+    public native void putObject(Object o, long offset, Object x);
+
+    /**
+     * Stores a reference value into a given Java variable, with
+     * volatile store semantics. Otherwise identical to {@link #putObject(Object, long, Object)}
+     */
+    public native void putObjectVolatile(Object o, long offset, Object x);
+
+    /**
+     * Version of {@link #putObjectVolatile(Object, long, Object)}
+     * that does not guarantee immediate visibility of the store to
+     * other threads. This method is generally only useful if the
+     * underlying field is a Java volatile (or if an array cell, one
+     * that is otherwise only accessed using volatile accesses).
+     */
+    public native void putOrderedObject(Object o, long offset, Object x);
+}
+```
+
+### 用途
+
+[ConcurrentHashMap大量使用Unsafe的putOrderedObject出于什么考虑?](https://www.zhihu.com/question/60888757)
+[Using JDK 9 Memory Order Modes,by Doug Lea大师](http://gee.cs.oswego.edu/dl/html/j9mm.html)
+[JDK-6275329 : Add lazySet methods to atomic classes](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6275329)
+
+#### jvm内存屏障
+jvm知识了
+常见有 4 种jvm内存屏障
+
+* LoadLoad 屏障 - 对于这样的语句 Load1; LoadLoad; Load2，在 Load2 及后续读取操作要读取的数据被访问前，保证 Load1 要读取的数据被读取完毕。
+* StoreStore 屏障 - 对于这样的语句 Store1; StoreStore; Store2，在 Store2 及后续写入操作执行前，保证 Store1 的写入操作对其它处理器可见。
+* LoadStore 屏障 - 对于这样的语句 Load1; LoadStore; Store2，在 Store2 及后续写入操作被执行前，保证 Load1 要读取的数据被读取完毕。
+* StoreLoad 屏障 - 对于这样的语句 Store1; StoreLoad; Load2，在 Load2 及后续所有读取操作执行前，保证 Store1
+  的写入对所有处理器可见。它的开销是四种屏障中最大的（冲刷写缓冲器，清空无效化队列）。在大多数处理器的实现中，这个屏障是个万能屏障，兼具其它三种内存屏障的功能。
+[Java 内存模型](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.md)
+  
+### 探究这三个方法到底有底层机制的不同之处
+
+思路:
+
+* native方法，支持查看C源码（太菜，没看懂）
+* 反汇编查询汇编执行指令
+
+写个小demo，反汇编语言指令查询这三个方法的区别 TODO:cj to be done putObject：无内存屏障指令 putObjectVolatile：store load类型内存屏障 putOrderedObject:store
+store类型内存屏障
+
+*连环问题之java内存屏障类型*
+
 # 小挑战
+
 ## 自己实现个 AtomicInteger
+
 TODO：cj
+
 # 资料
 
 [Unsafe jdk8u源码](https://github.com/cj-fork-git/jdk8u/blob/master/jdk/src/share/classes/sun/misc/Unsafe.java

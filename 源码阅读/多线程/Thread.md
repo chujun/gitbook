@@ -1,6 +1,6 @@
 #
 
-#                
+#                   
 
 # 应知应会
 
@@ -189,9 +189,10 @@ public class Thread {
 经典的伪共享问题， cpu缓存冲突/失效问题 需要启用参数 -XX:-RestrictContended 前后加128个byte，针对大多数cpu硬件两倍缓存行尺寸(64byte)
 
 [Java8使用@sun.misc.Contended避免伪共享](https://www.jianshu.com/p/c3c108c3dcfd)
+
 下面对文章中的示例做了demo
-(
-FalseSharing源码示例)[https://github.com/chujun/javaddu/blob/master/src/main/java/com/jun/chu/java/mulitread/FalseSharing.java]
+
+[FalseSharing源码示例](https://github.com/chujun/javaddu/blob/master/src/main/java/com/jun/chu/java/mulitread/FalseSharing.java)
 
 [RFR (S): JEP-142: Reduce Cache Contention on Specified Fields](http://mail.openjdk.java.net/pipermail/hotspot-dev/2012-November/007309.html)
 这篇文章里详细描述了@Contended的大致内存布局(包裹作用在类上和方法上)和@Contended分组使用的内存布局
