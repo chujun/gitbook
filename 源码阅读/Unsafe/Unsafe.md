@@ -282,11 +282,14 @@ store类型内存屏障
 
 *连环问题之java内存屏障类型*
 
+## Unsafe的park方法和Object.wait方法和Thread sleep方法区别
+TODO:cj
+[Thread.sleep、Object.wait、LockSupport.park 区别](https://blog.csdn.net/u013332124/article/details/84647915)
 # 小挑战
 
 ## 自己实现个 AtomicInteger
 
-TODO：cj
+TODO:cj
 
 # 资料
 
