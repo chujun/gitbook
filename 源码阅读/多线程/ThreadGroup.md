@@ -2,7 +2,7 @@
 
 ## ThreadGroup和Thread的关系
 
-TODO:cj Thread和ThreadGroup关系图 ThradGroup之间的关系是树的关系，而Thread与ThradGroup的关系就像元素与集合的关系。
+TODO:cj Thread和ThreadGroup关系图 TheadGroup之间的关系是树的关系，而Thread与TheadGroup的关系就像元素与集合的关系。
 
 ```
 ├─ ThreadGroup[name=system,maxpri=10]
