@@ -68,9 +68,18 @@
 		* [2021读书清单.md](书籍/读书计划/2021读书清单.md)
 		* [计算机领域书籍推荐.md](书籍/读书计划/计算机领域书籍推荐.md)
 ---
+* [历史](历史/README.md)
+---
+* [学习](学习/README.md)
+	* [方法论](学习/方法论/README.md)
+		* [如何高效学习.md](学习/方法论/如何高效学习.md)
+---
 * [工作](工作/README.md)
 	* [晋升](工作/晋升/README.md)
 		* [2021上半年晋升.md](工作/晋升/2021上半年晋升.md)
+---
+* [常用软件](常用软件/README.md)
+	* [sublime](常用软件/sublime/README.md)
 ---
 * [开发环境](开发环境/README.md)
 	* [c](开发环境/c/README.md)
@@ -117,9 +126,25 @@
 * [曾经画的那些图](曾经画的那些图/README.md)
 	* [高清设计图片集.md](曾经画的那些图/高清设计图片集.md)
 ---
+* [源码阅读](源码阅读/README.md)
+	* [Unsafe](源码阅读/Unsafe/README.md)
+		* [Unsafe.md](源码阅读/Unsafe/Unsafe.md)
+	* [多线程](源码阅读/多线程/README.md)
+		* [ConcurrentHashMap.md](源码阅读/多线程/ConcurrentHashMap.md)
+		* [FutureTask.md](源码阅读/多线程/FutureTask.md)
+		* [Thread.md](源码阅读/多线程/Thread.md)
+		* [ThreadGroup.md](源码阅读/多线程/ThreadGroup.md)
+---
 * [状态机设计](状态机设计/README.md)
 	* [trade-in-center](状态机设计/trade-in-center/README.md)
 		* [trade-in-center状态机设计.md](状态机设计/trade-in-center/trade-in-center状态机设计.md)
+---
+* [生活](生活/README.md)
+	* [睡眠](生活/睡眠/README.md)
+	* [科学饮食](生活/科学饮食/README.md)
+	* [羽毛球](生活/羽毛球/README.md)
+		* [羽毛球拍.md](生活/羽毛球/羽毛球拍.md)
+	* [运动](生活/运动/README.md)
 ---
 * [系统性能优化](系统性能优化/README.md)
 	* [极客时间-系统性能优化必知必会课程](系统性能优化/极客时间-系统性能优化必知必会课程/README.md)
