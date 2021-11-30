@@ -20,6 +20,8 @@
 		* [1多线程原理与实战.md](java/book-Java高并发核心编程.卷2，多线程、锁、JMM、JUC、高并发设计模式/1多线程原理与实战.md)
 	* [book-java并发编程的艺术](java/book-java并发编程的艺术/README.md)
 		* [1并发编程的挑战.md](java/book-java并发编程的艺术/1并发编程的挑战.md)
+	* [collection](java/collection/README.md)
+		* [HashMap.md](java/collection/HashMap.md)
 	* [java那些年踩过的坑](java/java那些年踩过的坑/README.md)
 		* [double参与运算.md](java/java那些年踩过的坑/double参与运算.md)
 		* [jpa.md](java/java那些年踩过的坑/jpa.md)
@@ -73,6 +75,7 @@
 * [学习](学习/README.md)
 	* [方法论](学习/方法论/README.md)
 		* [如何高效学习.md](学习/方法论/如何高效学习.md)
+		* [如何高效学习之智力挑战大汇总.md](学习/方法论/如何高效学习之智力挑战大汇总.md)
 ---
 * [工作](工作/README.md)
 	* [晋升](工作/晋升/README.md)
