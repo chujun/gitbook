@@ -36,6 +36,18 @@ xcode-select -p
 ### linux环境准备
 略去，见书籍
 
+### 编译命令
+bash configure [options]
+
+```shell
+bash configure --enable-debug --with-jvm-variants=server
+```
+
+--disable-warnings-as-errors：禁止将警告当成build错误，这样子警告不会影响build过程失败
+
+bash configure --with-jvm-variants=server --disable-warnings-as-errors
+
+make print-configuration打印当前configure的options输出在当前命令行中
 
 
 
@@ -71,3 +83,35 @@ xcode-select -p
 
 ## 网站资源
 * [高级语言虚拟机圈子](http://hllvm.group.iteye.com/)
+
+
+# 待梳理部分
+##  Running Make
+When running make without any arguments, the default target is used, which is the same as running make default or make jdk
+
+The output of the exploded image resides in $BUILD/jdk. You can test the newly built JDK like this: $BUILD/jdk/bin/java -version.
+# Problems with the Build Environment
+By default, the JDK has a strict approach where warnings from the compiler is considered errors which fail the build. For very new or very old compiler versions, this can trigger new classes of warnings, which thus fails the build. Run configure with --disable-warnings-as-errors to turn of this behavior. (The warnings will still show, but not make the build fail.)
+## 构建失败建议步骤
+Here are a suggested list of things to try if you are having unexpected build problems. Each step requires more time than the one before, so try them in order. Most issues will be solved at step 1 or 2.
+
+Make sure your repository is up-to-date
+
+Run hg pull -u to make sure you have the latest changes.
+
+Clean build results
+
+The simplest way to fix incremental rebuild issues is to run make clean. This will remove all build results, but not the configuration or any build system support artifacts. In most cases, this will solve build errors resulting from incremental build mismatches.
+
+Completely clean the build directory.
+
+If this does not work, the next step is to run make dist-clean, or removing the build output directory ($BUILD). This will clean all generated output, including your configuration. You will need to re-run configure after this step. A good idea is to run make print-configuration before running make dist-clean, as this will print your current configure command line. Here's a way to do this:
+
+make print-configuration > current-configuration
+make dist-clean
+bash configure $(cat current-configuration)
+make
+Re-clone the Mercurial repository
+
+Sometimes the Mercurial repository gets in a state that causes the product to be un-buildable. In such a case, the simplest solution is often the "sledgehammer approach": delete the entire repository, and re-clone it. If you have local changes, save them first to a different location using hg export.
+
