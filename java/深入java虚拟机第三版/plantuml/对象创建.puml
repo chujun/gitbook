@@ -1,7 +1,33 @@
 @startuml
-Alice -> Bob: todo Authentication Request
-Bob --> Alice: Authentication Response
+actor Java堆 as heap
+entity 常量池 as pool
+boundary 类加载
+entity class文件 as class
+autonumber
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+
+heap -> pool: 寻找类符号引号
+== 1类加载 ==
+alt 类未加载
+    pool -> 类加载: 类加载过程(详见第七章)
+    类加载 --> pool: 类加载过程完成
+    pool--> heap:
+else 类已加载
+    pool--> heap:
+end
+== 2为对象分配内存 ==
+heap -> 类加载: 确定对象所需内存大小(类加载完成后即可确定)
+类加载 --> heap:
+
+== 2.1对象内存方式 ==
+alt 内存分配方式:指针碰撞分配方式
+else 空闲列表分配方式
+end
+== 2.2初始化零值 ==
+
+== 2.3对象头必要信息设置 ==
+
+== 3执行构造器方法 ==
+heap -> class: 执行Class对象的对应<init>()方法
+class --> heap:
 @enduml
