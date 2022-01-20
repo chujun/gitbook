@@ -2,7 +2,7 @@
 actor Java堆 as heap
 entity 常量池 as pool
 boundary 类加载
-entity class文件 as class
+entity class对象 as class
 autonumber
 
 
@@ -21,13 +21,15 @@ heap -> 类加载: 确定对象所需内存大小(类加载完成后即可确定
 
 == 2.1对象内存方式 ==
 alt 内存分配方式:指针碰撞分配方式
+    heap->heap:
 else 空闲列表分配方式
+    heap->heap:
 end
-== 2.2初始化零值 ==
+== 3.1初始化零值 ==
 
-== 2.3对象头必要信息设置 ==
+== 3.2对象头必要信息设置 ==
 
-== 3执行构造器方法 ==
+== 3.3执行构造器方法 ==
 heap -> class: 执行Class对象的对应<init>()方法
 class --> heap:
 @enduml
