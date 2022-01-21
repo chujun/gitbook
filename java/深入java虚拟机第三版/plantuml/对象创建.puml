@@ -1,8 +1,10 @@
 @startuml
 actor Java堆 as heap
+boundary 内存分配 as allocation
 entity 常量池 as pool
 boundary 类加载
 entity class对象 as class
+
 autonumber
 
 
@@ -15,19 +17,38 @@ alt 类未加载
 else 类已加载
     pool--> heap:
 end
-== 2为对象分配内存 ==
+== 2对象分配内存 ==
 heap -> 类加载: 确定对象所需内存大小(类加载完成后即可确定)
 类加载 --> heap:
 
-== 2.1对象内存方式 ==
+alt 开启TLAB:-XX +UseTLAB(多线程并发分配内存)
+    heap -> allocation:申请内存分配
+    alt TLAB内存分配成功:
+        allocation-->heap:分配成功
+    else TLAB分配失败(TLAB已满)，用CAS方案
+        loop 循环无限次直到分配成功:
+            heap -> allocation:CAS分配内存
+            allocation-> heap:
+        end
+    end
+else 同步方案CAS分配内存
+    loop 循环无限次直到分配成功:
+        heap -> allocation:CAS分配内存
+        allocation-> heap:
+    end
+end
 alt 内存分配方式:指针碰撞分配方式
-    heap->heap:
+    allocation->allocation:todo
 else 空闲列表分配方式
-    heap->heap:
+    allocation->allocation:todo
 end
 == 3.1初始化零值 ==
-
+alt true==useTLAB && true==zeroTLAB
+    heap->heap:已初始化为零值,跳过该步骤
+else 分配内存空间初始化为零值
+end
 == 3.2对象头必要信息设置 ==
+heap->heap:设置对象头信息:对象所属类,查找类元数据方式,对象哈希吗,对象GC分代年龄等等
 
 == 3.3执行构造器方法 ==
 heap -> class: 执行Class对象的对应<init>()方法

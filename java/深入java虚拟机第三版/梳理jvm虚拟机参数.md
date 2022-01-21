@@ -22,7 +22,9 @@ todo：大小感敏感嘛
 |ss|intx||todo栈大小,例如128k|内存大小||
 |PrintFlagsInitial|bool|false|表示打印出所有参数选项的默认值|输出||
 |PrintFlagsFinal|bool|false|表示打印出所有参数选项在运行程序时生效的值|输出||
-|UseTLAB|bool|true|是否使用TLAB(线程私有分配缓冲区，Thread Local Allocation Buffer)
+|UseTLAB|bool|true|是否使用TLAB(线程私有分配缓冲区，Thread Local Allocation Buffer)|内存分配||
+|ZeroTLAB|bool|false|是否将新建的TLAB区域全部设置为零值，(todo为什么默认值是false，这是个可以探究的问题)|内存分配||
+
 
 
 # 资料
