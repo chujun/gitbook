@@ -42,7 +42,7 @@ alt 内存分配方式:指针碰撞分配方式
 else 空闲列表分配方式
     allocation->allocation:todo
 end
-== 3.1初始化零值 ==
+== 3.1初始化内存空间零值 ==
 alt true==useTLAB && true==zeroTLAB
     heap->heap:已初始化为零值,跳过该步骤
 else 分配内存空间初始化为零值
