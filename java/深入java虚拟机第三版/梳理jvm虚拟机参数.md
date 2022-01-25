@@ -39,6 +39,21 @@ todo:cj 前者小写后者大写？
 HotSpot虚拟机针对-XX类型参数
 boolean类型:-XX:+/-arg,+表示开启，-表示关闭
 
+# 如果输出一个正在运行的java应用配置的jvm参数
+使用jvm工具jinfo -flags
+```shell
+#例如测试环境我们的服务tic，28是jps后得到的进程id
+jinfo -flags 28
+```
+输出如下
+```shell
+Attaching to process ID 28, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.91-b14
+Non-default VM flags: -XX:CICompilerCount=4 -XX:CMSInitiatingOccupancyFraction=75 -XX:+DisableExplicitGC -XX:HeapDumpPath=null -XX:InitialHeapSize=2147483648 -XX:MaxHeapSize=2147483648 -XX:MaxNewSize=697892864 -XX:MaxTenuringThreshold=6 -XX:MinHeapDeltaBytes=196608 -XX:NewSize=697892864 -XX:OldPLABSize=16 -XX:OldSize=1449590784 -XX:-OmitStackTraceInFastThrow -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -XX:+UseCMSInitiatingOccupancyOnly -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseConcMarkSweepGC -XX:+UseParNewGC
+Command line:  -Xmx2048M -Xms2048M -XX:-OmitStackTraceInFastThrow -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+PrintHeapAtGC -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -Xloggc:/data/log/trade-in-center-service-gc.txt -XX:+DisableExplicitGC -XX:HeapDumpPath=/data/log/trade-in-center-service.dump -javaagent:/usr/src/myapp/aihuishou-agent.jar -javaagent:/usr/src/myapp/skywalking-agent/skywalking-agent.jar -javaagent:/usr/src/myapp/transmittable-thread-local-2.10.2.jar -javaagent:/usr/src/myapp/jmx_prometheus_javaagent-0.3.1.jar=18080:/usr/src/myapp/config.yaml
+```
 [参考官方文档jvm options说明](https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html)
 # 列表
 
