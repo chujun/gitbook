@@ -26,12 +26,21 @@ intx CompilationPolicyChoice                   = 3                              
 
 ![jvmPrint.md](out/jvmPrint.md)
 
+# 关于参数设置的一些说明
+## HotSpot虚拟机两类参数类型
+Java HotSpot VM的官方文档
 
+|参数类型|类型|描述|格式|
+|---|---|---|---|
+|-X|非标准参数|不是虚拟机规范规定的,不是所有其他虚拟机都支持这些参数|-Xms20m|
+|-XX|不稳定参数|是虚拟机规范规定的|-XX:+PrintFlagsInitial,-XX:FieldsAllocationStyle=0|
+todo:cj 前者小写后者大写？
+## 
+HotSpot虚拟机针对-XX类型参数
+boolean类型:-XX:+/-arg,+表示开启，-表示关闭
 
+[参考官方文档jvm options说明](https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html)
 # 列表
-
--XXmx -XX:+/-arg(bool值类型可以用+/-,todo猜测)
-todo：大小感敏感嘛
 
 |参数名|值类型|默认值|说明|分组|版本说明|
 |---|---|---|---|---|---|
