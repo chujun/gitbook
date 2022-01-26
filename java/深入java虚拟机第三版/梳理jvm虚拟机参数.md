@@ -61,7 +61,7 @@ Command line:  -Xmx2048M -Xms2048M -XX:-OmitStackTraceInFastThrow -XX:+UseConcMa
 |---|---|---|---|---|---|
 |mx|intx|todo|max，todo堆内存大小上限,单位|内存大小||
 |mn|intx|todo|min,todo堆内存大小下限,单位|内存大小||
-|ss|intx|todo|stock size,todo栈大小,例如128k|内存大小||
+|ss|intx|todo|stock size,todo java方法栈容量大小,例如128k|内存大小||
 |PrintFlagsInitial|bool|false|表示打印出所有参数选项的默认值|输出|| 
 |PrintFlagsFinal|bool|false|表示打印出所有参数选项在运行程序时生效的值|输出||
 |PrintCommandLineFlags|bool|false|表示打印出被新值覆盖的参数列表|输出||
