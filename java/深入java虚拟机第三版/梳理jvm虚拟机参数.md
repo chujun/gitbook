@@ -71,6 +71,7 @@ Command line:  -Xmx2048M -Xms2048M -XX:-OmitStackTraceInFastThrow -XX:+UseConcMa
 |CompactFields|bool|true|是否允许子类中较窄的字段插入到父类字段间隙中|java内存布局|| 
 |UseCompressedOops|bool|false|普通对象指针压缩|java内存布局||
 |UseCompressedClassPointers|bool|false|类指针压缩,依赖UseCompressedOops，只有UseCompressedOops参数生效前提下才能生效|java内存布局||
+|HeapDumpOnOutOfMemoryError|bool|false|OOM异常时是否存储堆栈转储文件|OOM异常||
 
 # 资料
 
