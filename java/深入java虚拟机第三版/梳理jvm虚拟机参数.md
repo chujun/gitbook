@@ -34,7 +34,9 @@ Java HotSpot VM的官方文档
 |---|---|---|---|
 |-X|非标准参数|不是虚拟机规范规定的,不是所有其他虚拟机都支持这些参数|-Xms20m|
 |-XX|不稳定参数|是虚拟机规范规定的|-XX:+PrintFlagsInitial,-XX:FieldsAllocationStyle=0|
-todo:cj 前者小写后者大写？
+严格区分大小写，不合法的jvm参数，运行时会直接报错，无法识别该jvm参数
+todo:cj 前者小写后者大写？（目前看起来的demo是这样子的）
+
 ## 
 HotSpot虚拟机针对-XX类型参数
 boolean类型:-XX:+/-arg,+表示开启，-表示关闭
@@ -72,7 +74,11 @@ Command line:  -Xmx2048M -Xms2048M -XX:-OmitStackTraceInFastThrow -XX:+UseConcMa
 |UseCompressedOops|bool|false|普通对象指针压缩|java内存布局||
 |UseCompressedClassPointers|bool|false|类指针压缩,依赖UseCompressedOops，只有UseCompressedOops参数生效前提下才能生效|java内存布局||
 |HeapDumpOnOutOfMemoryError|bool|false|OOM异常时是否存储堆栈转储文件|OOM异常||
-
+|MetaspaceSize|intx|todo|元空间初始gc阈值(而非元空间的初始大小),达到改值时触发垃圾回收期进行gc(类型卸载),同时会动态调整该值大小|元空间|jdk8+|
+|MaxMetaspaceSize|uintx|todo|,元空间大小上限-1表示不限制大小，只受限于内存大小|元空间|jdk8+|
+|MinMetaspaceFreeRatio|uintx|40|todo|元空间|jdk8+|
+|MaxMetaspaceFreeRatio|uinx|70|todo|元空间|jdk8+|
+|MaxDirectMemorySize|uinx|0|直接内存大小，默认不限制和Java堆最大值一致|直接内存||
 # 资料
 
 ## book

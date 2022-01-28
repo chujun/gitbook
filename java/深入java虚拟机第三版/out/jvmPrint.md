@@ -1,4 +1,4 @@
-jdk8
+#jdk8
 
 jvm参数
 -XX:+PrintFlagsFinal -XX:FieldsAllocationStyle=0 -XX:-UseCompressedOops -XX:-UseCompressedClassPointers -XX:+CompactFields -XX:-ZeroTLAB
