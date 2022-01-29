@@ -83,7 +83,10 @@ todo:cj to be study 元空间结构 and jvm相关参数
 
 ## 参考资料
 
+## TODO学习
 [Go的垃圾回收算法（三色标记法）](https://www.cnblogs.com/cxy2020/p/15753450.html)
+### DirectByteBuffer源码分析
+[Java直接内存的分配和释放](https://yasinshaw.com/articles/59)
 
 
 
