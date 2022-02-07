@@ -738,3 +738,9 @@ uintx YoungGenerationSizeSupplementDecay        = 8                             
 uintx YoungPLABSize                             = 4096                                {product}
 bool ZeroTLAB                                 := false                               {product}
 intx hashCode                                  = 5                                   {product}
+
+
+
+
+# 资料
+[[翻译]Java -XX:+PrintFlagsFinal命令行参数详解](https://emacsist.github.io/2016/01/11/%E7%BF%BB%E8%AF%91java-xx-printflagsfinal%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3/)

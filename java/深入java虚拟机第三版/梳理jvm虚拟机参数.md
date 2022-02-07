@@ -58,7 +58,13 @@ Command line:  -Xmx2048M -Xms2048M -XX:-OmitStackTraceInFastThrow -XX:+UseConcMa
 ```
 [参考官方文档jvm options说明](https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html)
 # 列表
+## verbose
+|参数名|值类型|默认值|说明|分组|版本说明|
+|---|---|---|---|---|---|
+|-verbose:class|||监控类的加载和卸载|类加载卸载||
+|–verbose:gc|||输出gc时的信息，todo|gc日志||
 
+## 普通
 |参数名|值类型|默认值|说明|分组|版本说明|
 |---|---|---|---|---|---|
 |mx|intx|todo|max，todo堆内存大小上限,单位|内存大小||
@@ -79,6 +85,8 @@ Command line:  -Xmx2048M -Xms2048M -XX:-OmitStackTraceInFastThrow -XX:+UseConcMa
 |MinMetaspaceFreeRatio|uintx|40|todo|元空间|jdk8+|
 |MaxMetaspaceFreeRatio|uinx|70|todo|元空间|jdk8+|
 |MaxDirectMemorySize|uinx|0|直接内存大小，默认不限制和Java堆最大值一致|直接内存||
+|TraceClassLoading|bool|false|跟踪类的加载，与-verbose:class相比，少了类的卸载信息|类加载卸载||
+|TraceClassUnLoading|bool|false|跟踪类的卸载，与-verbose:class相比，少了类的加载信息|类加载卸载||
 # 资料
 
 ## book
