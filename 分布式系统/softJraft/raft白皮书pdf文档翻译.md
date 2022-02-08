@@ -29,6 +29,10 @@ Raft也提供了新机制来改变集群成员关系，通过使用来重叠的�
 
 不幸的是，Paxos相当难以理解，尽管它尝试了大量方式简化理解。
 更多的是，Paxos体系若要支持实际业务系统要求复杂的变更。结果系统构建者和学生都在跟Paxos做艰苦斗争。
+
+我们经历艰苦斗争之后，我们致力于寻找新的为搭建系统和教学提供更好基础的一致性算法。
+我们的目标是不寻常的，在于我们致力于可理解性：我们能够定义设计这样一种针对实际业务系统的一致性算法嘛？
+它能以比Paxos更简单易懂的方式描述。
 # 参考
 ## 翻译
 [Raft论文翻译](https://willzhuang.github.io/2018/03/04/Raft%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91/)
@@ -66,7 +70,8 @@ to support practical systems. As a result, both system
 builders and students struggle with Paxos.
 
 After struggling with Paxos ourselves, we set out to
-find a new consensus algorithm that could provide a better foundation for system building and education. Our approach was unusual in that our primary goal was understandability: could we define a consensus algorithm for
+find a new consensus algorithm that could provide a better foundation for system building and education. 
+Our approach was unusual in that our primary goal was understandability: could we define a consensus algorithm for
 practical systems and describe it in a way that is significantly easier to learn than Paxos? Furthermore, we wanted
 the algorithm to facilitate the development of intuitions
 that are essential for system builders. It was important not
