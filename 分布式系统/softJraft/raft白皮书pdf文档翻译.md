@@ -11,6 +11,8 @@ Diego Ongaro and John Ousterhout
 * coherent:有条理的，连贯的
 * in spite of：尽管
 * struggle:艰难行进
+* decomposition:分解
+* nondeterminism：非确定性
 # 概要
 Raft是一种管理复制日志的一致性算法。它等效于multi-Paxos，并且是高效的，但它的结构不同于Paxos；
 相比于Paxos，Raft更易于理解，并且它为构建实际系统提供了更好的基础。
@@ -107,4 +109,6 @@ state machine problem (Section 2), discusses the strengths
 and weaknesses of Paxos (Section 3), describes our general approach to understandability (Section 4), presents
 the Raft consensus algorithm (Sections 5–8), evaluates
 Raft (Section 9), and discusses related work (Section 10).
+
+# 2 Replicated state machines
 
