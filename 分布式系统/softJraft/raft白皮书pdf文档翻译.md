@@ -13,6 +13,10 @@ Diego Ongaro and John Ousterhout
 * struggle:艰难行进
 * decomposition:分解
 * nondeterminism：非确定性
+# 图重要
+![raft算法概览](img/raft算法概览.png)
+![raft算法时刻保证的特性](img/raft算法时刻保证的特性.png)
+
 # 概要
 Raft是一种管理复制日志的一致性算法。它等效于multi-Paxos，并且是高效的，但它的结构不同于Paxos；
 相比于Paxos，Raft更易于理解，并且它为构建实际系统提供了更好的基础。

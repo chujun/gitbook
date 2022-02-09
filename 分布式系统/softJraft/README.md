@@ -4,6 +4,12 @@
 
 # doc
 
+# todo问题列表
+
+## 什么时候更新状态机
+
+## raft怎么处理raft.pdf中Figure8中的问题
+
 ## website
 [raft官网](https://raft.github.io/)
 [raft白皮书](https://raft.github.io/raft.pdf)
