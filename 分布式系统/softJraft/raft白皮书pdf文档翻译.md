@@ -6,6 +6,7 @@ Diego Ongaro and John Ousterhout
 * Paxos：一种一致性算法
 * replicated log:复制日志
 * overlapping majorities：重叠的大多数
+* FSM:有限状态机
 # 单词
 * coherency:一致性
 * coherent:有条理的，连贯的
