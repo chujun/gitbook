@@ -1,6 +1,6 @@
 # raft
 
-# soft-jraft
+# SOFA-jraft
 
 # doc
 
@@ -23,7 +23,7 @@
 
 [线性一致性和 Raft](https://pingcap.com/blog-cn/linearizability-and-raft)
 
-## soft-jraft
+## SOFA-jraft
 
 [alibaba soft-jraft实现](https://github.com/sofastack/sofa-jraft)
 [SOFAJRaft 介绍](https://www.sofastack.tech/projects/sofa-jraft/overview/)
