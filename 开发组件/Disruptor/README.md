@@ -18,11 +18,12 @@ Martin Fowler
 
 [disruptor github](https://github.com/LMAX-Exchange/disruptor)
 [性能测试报告](https://github.com/LMAX-Exchange/disruptor/wiki/Performance-Results)
-
+[Blogs-And-Articles](https://github.com/LMAX-Exchange/disruptor/wiki/Blogs-And-Articles)
 ## 权威文档
 
 [https://lmax-exchange.github.io/disruptor/](https://lmax-exchange.github.io/disruptor/)
 [https://lmax-exchange.github.io/disruptor/disruptor.html](https://lmax-exchange.github.io/disruptor/disruptor.html)
+[user-guide](https://lmax-exchange.github.io/disruptor/user-guide/index.html)
 
 ## 权威文章
 
