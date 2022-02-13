@@ -37,6 +37,10 @@ state scope
 * 类必须有无参构造器
 
 状态对象也可以使用@Setup and @TearDown两个注解
+@Setup和@TearDown的Level 执行时机水平
+* Level.Trial 每次基准(benchmark)测试执行
+* Level.Iteration 每个基准(benchmark)测试的每个迭代(iteration)执行
+* Level.Invocation 源码注解绝大多数情况下不推荐使用
 
 
 
