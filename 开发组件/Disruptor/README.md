@@ -12,7 +12,10 @@ Martin Fowler
 
 ## 超大数组环形结构RingBuffer(无锁)
 
-#  
+##  预分配缓存对象，使用缓存的循环覆盖取代缓存的新增删除等
+
+## disruptor并发模型
+todo说明
 
 ## 官网
 
@@ -29,9 +32,13 @@ Martin Fowler
 
 [author Martin Fowler for <<The LMAX Architecture>>](https://martinfowler.com/articles/lmax.html)
 
-## 博客
 
+
+## 博客
 [并发框架Disruptor译文](https://developer.aliyun.com/article/88456?spm=a2c6h.14164896.0.0.48b348c27Hirdo)
+## 讲得好系列
+[源码解读-阿里云开发社区-Disruptor深入解读](https://developer.aliyun.com/article/553297)
+
 
 ## 工具
 * jmh
