@@ -3,7 +3,7 @@
 import os
 import os.path
 
-exclude_paths = ['__pycache__', 'lib', 'script', '.idea', '_book', 'node_modules', 'img','assets', 'README.md','xmind','draw','plantuml','out']
+exclude_paths = ['__pycache__', 'lib', 'script', '.idea', '_book', 'node_modules', 'img','assets', 'README.md','xmind','draw','puml','plantuml','out']
 level_max_limit = 3
 file_name = 'SUMMARY.md'
 

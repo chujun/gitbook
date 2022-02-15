@@ -30,6 +30,12 @@
 		* [常用命令.md](java/maven/常用命令.md)
 	* [多线程](java/多线程/README.md)
 		* [CAS.md](java/多线程/CAS.md)
+		* [java内存模型.md](java/多线程/java内存模型.md)
+	* [深入java虚拟机第三版](java/深入java虚拟机第三版/README.md)
+		* [2对象内存布局.md](java/深入java虚拟机第三版/2对象内存布局.md)
+		* [梳理jvm虚拟机参数.md](java/深入java虚拟机第三版/梳理jvm虚拟机参数.md)
+		* [深入java虚拟机第三版.md](java/深入java虚拟机第三版/深入java虚拟机第三版.md)
+		* [自己编译openjdk12.md](java/深入java虚拟机第三版/自己编译openjdk12.md)
 ---
 * [jvm](jvm/README.md)
 	* [jvm常用工具](jvm/jvm常用工具/README.md)
@@ -56,6 +62,12 @@
 		* [22executor包.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/22executor包.md)
 		* [mybatis框架运行梳理.md](mybatis学习/通用源码阅读指导书之mybatis源码详解/mybatis框架运行梳理.md)
 ---
+* [python](python/README.md)
+	* [PythonCookbook](python/PythonCookbook/README.md)
+---
+* [spring](spring/README.md)
+	* [事务7个传播机制.md](spring/事务7个传播机制.md)
+---
 * [springcloud](springcloud/README.md)
 	* [性能优化配置](springcloud/性能优化配置/README.md)
 		* [feign性能优化配置之httpclient超时配置.md](springcloud/性能优化配置/feign性能优化配置之httpclient超时配置.md)
@@ -70,10 +82,16 @@
 		* [2021读书清单.md](书籍/读书计划/2021读书清单.md)
 		* [计算机领域书籍推荐.md](书籍/读书计划/计算机领域书籍推荐.md)
 ---
+* [分布式系统](分布式系统/README.md)
+	* [sofaJraft](分布式系统/sofaJraft/README.md)
+		* [raft白皮书pdf文档翻译.md](分布式系统/sofaJraft/raft白皮书pdf文档翻译.md)
+		* [sofa-Jraft.md](分布式系统/sofaJraft/sofa-Jraft.md)
+---
 * [历史](历史/README.md)
 ---
 * [学习](学习/README.md)
 	* [方法论](学习/方法论/README.md)
+		* [书籍-记忆宫殿-快速提升记忆力.md](学习/方法论/书籍-记忆宫殿-快速提升记忆力.md)
 		* [如何高效学习.md](学习/方法论/如何高效学习.md)
 		* [如何高效学习之智力挑战大汇总.md](学习/方法论/如何高效学习之智力挑战大汇总.md)
 ---
@@ -82,6 +100,10 @@
 		* [2021上半年晋升.md](工作/晋升/2021上半年晋升.md)
 ---
 * [常用软件](常用软件/README.md)
+	* [alfred](常用软件/alfred/README.md)
+		* [YoudaoTranslateAlfredWorkflow.md](常用软件/alfred/YoudaoTranslateAlfredWorkflow.md)
+	* [brew](常用软件/brew/README.md)
+		* [brew常见问题归总.md](常用软件/brew/brew常见问题归总.md)
 	* [sublime](常用软件/sublime/README.md)
 ---
 * [开发环境](开发环境/README.md)
@@ -93,6 +115,10 @@
 	* [pycharm](开发环境/pycharm/README.md)
 		* [永久激活方法.md](开发环境/pycharm/永久激活方法.md)
 ---
+* [开发组件](开发组件/README.md)
+	* [Disruptor](开发组件/Disruptor/README.md)
+		* [disruptorUserGuide.md](开发组件/Disruptor/disruptorUserGuide.md)
+---
 * [性能测试](性能测试/README.md)
 	* [gperftools.md](性能测试/gperftools.md)
 	* [jmeter官网](性能测试/jmeter官网/README.md)
@@ -100,6 +126,7 @@
 	* [jmeter性能测试实战(第2版)](性能测试/jmeter性能测试实战(第2版)/README.md)
 		* [1性能测试基础.md](性能测试/jmeter性能测试实战(第2版)/1性能测试基础.md)
 		* [2录制第一个测试.md](性能测试/jmeter性能测试实战(第2版)/2录制第一个测试.md)
+	* [jmh](性能测试/jmh/README.md)
 	* [性能测试工具](性能测试/性能测试工具/README.md)
 		* [Arthas.md](性能测试/性能测试工具/Arthas.md)
 		* [http_load.md](性能测试/性能测试工具/http_load.md)

@@ -1,0 +1,24 @@
+@startuml
+class Sequence
+interface DataProvider
+class RingBuffer extends DataProvider
+class 用户自定义数据结构 extends DataProvider
+
+interface DataProvider<T>{
+    T get(long sequence)
+}
+
+class Sequence{
+# volatile long value
++ long get()
++ void set(long value)
++ void setVolatile(long value)
++ boolean compareAndSet(long expectedValue,
+    long newValue)
++ long incrementAndGet()
++ long addAndGet(long increment)
+}
+
+Sequence::value --> DataProvider
+
+@enduml
