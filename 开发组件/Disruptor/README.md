@@ -42,7 +42,7 @@ todo说明
 ## 讲得好系列博客
 [Disruptor 源码解读](https://xie.infoq.cn/article/3ed1885602c2ca022bd00ee3c)
 [源码解读-阿里云开发社区-Disruptor深入解读](https://developer.aliyun.com/article/553297)
-
+[disruptor源码分析五之WorkerPool](https://cloud.tencent.com/developer/article/1462221)
 
 ## 工具
 * jmh
