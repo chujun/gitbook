@@ -19,6 +19,8 @@ todo说明
 
 # 设计
 ![disruptor架构图.svg](img/disruptor架构图.svg)
+![disruptor单生产者发布事件整体过程一览](img/disruptor单生产者发布事件整体过程一览.svg)
+![多生产者发布事件整体过程一览](img/多生产者发布事件整体过程一览.svg)
 
 ## 官网
 
