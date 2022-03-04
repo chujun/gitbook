@@ -21,6 +21,8 @@ todo说明
 ![disruptor架构图.svg](img/disruptor架构图.svg)
 ![disruptor单生产者发布事件整体过程一览](img/disruptor单生产者发布事件整体过程一览.svg)
 ![多生产者发布事件整体过程一览](img/多生产者发布事件整体过程一览.svg)
+![disruptor一个场景，一个生产者A与三个消费者B、C、D,同时D的事件处理需要B与C先完成](img/disruptor一个场景，一个生产者A与三个消费者B、C、D,同时D的事件处理需要B与C先完成.png)
+![disruptor消费者C依赖消费A和消费者B的消费过程](img/disruptor消费者C依赖消费A和消费者B的消费过程.svg)
 
 ## 官网
 
