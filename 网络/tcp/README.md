@@ -46,8 +46,17 @@ FIN_WAIT_2和CLOSE_WAIT正常都是临时存在的，而非大量存在的状态
 ## tcp检测半打开连接
 RST报文类型作用
 
+## 4次分手过程，服务器端为什么不把ACK和FIN两段报文合二为一，提交效率
+服务器发ACK回应客户端的FIN报文，一般是立刻的。
+* 1.而服务器收到客户端的FIN报文后，可能还需要做一些工作，然后才发送FIN报文给客户端
+* 2.服务器收到客户端的FIN报文后，可能还有继续发数据给客户端的需求
+综上所属，tcp没有把两段报文合二为一
+
 
 
 ## 
 [TCP/IP详解 卷1：协议在线阅读](http://www.52im.net/topic-tcpipvol1.html)
 [TCP/IP详解 卷1：协议 附录D 部分习题的解答](http://docs.52im.net/extend/docs/book/tcpip/vol1/d/#hd_17)
+
+## 案例学习
+[线上大量CLOSE_WAIT的原因深入分析](https://juejin.cn/post/6844903734300901390)
