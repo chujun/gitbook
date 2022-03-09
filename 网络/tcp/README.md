@@ -19,6 +19,7 @@ tcp/id详解券一:协议
 ![tcpdump的正常输出演示](img/tcpdump的正常输出演示.png)
 ![tcp状态迁移图](img/tcp状态迁移图.png)
 ![tcp正常建立和终止客户端和服务器端对应的状态](img/tcp正常建立和终止客户端和服务器端对应的状态.png)
+![TCP滑动窗口的可视化表示](img/TCP滑动窗口的可视化表示.png)
 
 # 简称
 ## tcp
