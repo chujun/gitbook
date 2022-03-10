@@ -24,6 +24,10 @@ https://appuals.com/kernal-driver-not-installed-rc-1908-error-mac/
 您需要安装Virtualbox guest虚拟机来执行此操作。
 在打开的虚拟机客户端界面上方弹出菜单栏（而非mac的virtual box页面），选择devices->install guest additions CD images
 [](https://cn.kevinmcgowan.org/810341-fullscreen-virtualbox-QODCJP-article)
+其实我已经安装上了这个guest了
+Machine->display界面中进行设置
+![调整virtualbox下centos屏幕左右两遍留白过多.png](img/调整virtualbox下centos屏幕左右两遍留白过多.png)
+
 
 ## mac上安装的centos不能全品打开
 [VBoxGuestAdditions_6.1.30.iso](http://download.virtualbox.org/virtualbox/6.1.30/)
