@@ -23,7 +23,8 @@ tcp/id详解券一:协议
 
 # 简称
 ## tcp
-MSL Maximum Segment Lifetime:tcp报文段最大生存时长 2MSL
+MSL: Maximum Segment Lifetime,tcp报文段最大生存时长 2MSL
+RTT:
 # 工具
 ## tcpdump
 ## netstat
@@ -31,6 +32,7 @@ MSL Maximum Segment Lifetime:tcp报文段最大生存时长 2MSL
 
 
 # 临时杂谈记录
+内在联系
 ## tcp首部最多60字节解释
 Offset:给出首部中32 bit字的数目，需要这个值是因为任选字段的长度是可变的。这个字段占4bit（最多能表示15个32bit的的字，即4*15=60个字节的首部长度），因此TCP最多有60字节的首部。然而，没有任选字段，正常的长度是20字节
 ## 1.12 telnet
@@ -59,10 +61,28 @@ RST报文类型作用
 ## 算法
 * nagle算法：tcp端至多只能有一个未被确认的分组，只有该未被确认的分组确认后才能发送后续的分组
 
+## 发送方的流量控制和接受方的流量控制
 
-## 
+## Tcp发送方流量控制
+一个一个发送:negal算法，
+全发:按照窗口大小发送，
+控制:拥塞窗口发送
+
+## 4种定时器
+* 超时重传定时器
+* 坚持定时器
+* 保活定时器
+* 2MSL定时器
+
+## tcp乱序处理
+21.5示例
+
+# 资料
+
+##
 [TCP/IP详解 卷1：协议在线阅读](http://www.52im.net/topic-tcpipvol1.html)
 [TCP/IP详解 卷1：协议 附录D 部分习题的解答](http://docs.52im.net/extend/docs/book/tcpip/vol1/d/#hd_17)
-
+## 文献
+jacobson 1988
 ## 案例学习
 [线上大量CLOSE_WAIT的原因深入分析](https://juejin.cn/post/6844903734300901390)
