@@ -33,7 +33,7 @@ Java HotSpot VM的官方文档
 |参数类型|类型|描述|格式|
 |---|---|---|---|
 |-X|非标准参数|不是虚拟机规范规定的,不是所有其他虚拟机都支持这些参数|-Xms20m|
-|-XX|不稳定参数|是虚拟机规范规定的|-XX:+PrintFlagsInitial,-XX:FieldsAllocationStyle=0|
+|-XX|稳定参数|是虚拟机规范规定的|-XX:+PrintFlagsInitial,-XX:FieldsAllocationStyle=0|
 严格区分大小写，不合法的jvm参数，运行时会直接报错，无法识别该jvm参数
 todo:cj 前者小写后者大写？（目前看起来的demo是这样子的）
 
